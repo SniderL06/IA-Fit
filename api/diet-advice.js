@@ -1,11 +1,11 @@
 // api/diet-advice.js  –  Vercel Serverless Function
 // Endpoint: POST /api/diet-advice
-// Genera sugerencias de menú diario con Gemini AI basándose en el perfil de salud y preferencias.
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL   = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
 
-function sanitizeUserProfile(profile = {}) {
+function sanitizeUserProfile(profile) {
+    profile = profile || {};
     return {
         weight:               profile.weight,
         height:               profile.height,
@@ -39,16 +39,16 @@ ${JSON.stringify(safeFoods)}
 
 TU TAREA: proponer un menú de ejemplo para UN día (desayuno, almuerzo, cena y snacks según la cantidad de comidas indicada en las preferencias), usando ÚNICAMENTE alimentos de la lista pre-aprobada, distribuidos de forma razonable para acercarse a la meta calórica.
 
-REGLAS QUE DEBES SEGUIR SIEMPRE:
+REGLAS:
 1. Responde en español, tono cercano y motivador, en formato de lista breve por comida (máximo ~180 palabras en total).
-2. Usa SOLO alimentos de la lista pre-aprobada. No sugieras ingredientes fuera de ella.
-3. No des gramajes clínicos exactos ni recetas médicas; da porciones generales ("un puñado", "una taza", "una porción mediana").
-4. Si el perfil indica diabetes, hipertensión, o alguna condición cardíaca/respiratoria, incluye al final una línea breve recordando moderar sodio/azúcares simples según corresponda y consultar a un nutricionista o médico para un plan personalizado.
-5. No des consejos médicos ni de medicación. Si la persona lo pide, redirige a un profesional de salud.
+2. Usa SOLO alimentos de la lista pre-aprobada.
+3. No des gramajes clínicos exactos; da porciones generales ("un puñado", "una taza", "una porción mediana").
+4. Si el perfil indica diabetes, hipertensión, o alguna condición cardíaca/respiratoria, incluye al final una línea breve recordando moderar sodio/azúcares simples y consultar a un nutricionista o médico.
+5. No des consejos médicos ni de medicación.
 6. No sugieras dietas extremas ni calorías por debajo de la meta calórica ya calculada.`;
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -60,20 +60,21 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: 'Falta la variable de entorno GEMINI_API_KEY en Vercel.' });
     }
 
-    const { userProfile, dietPreferences, calorieTargets, safeFoods } = req.body || {};
+    const body = req.body || {};
+    const safeFoods = body.safeFoods;
 
     if (!Array.isArray(safeFoods) || safeFoods.length === 0) {
         return res.status(400).json({ error: 'No hay alimentos seguros para armar una sugerencia.' });
     }
 
     const systemPrompt = buildDietSystemPrompt(
-        sanitizeUserProfile(userProfile),
-        dietPreferences  || {},
-        calorieTargets   || {},
+        sanitizeUserProfile(body.userProfile),
+        body.dietPreferences  || {},
+        body.calorieTargets   || {},
         safeFoods
     );
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + GEMINI_MODEL + ':generateContent?key=' + GEMINI_API_KEY;
 
     try {
         const geminiResponse = await fetch(url, {
@@ -93,13 +94,15 @@ export default async function handler(req, res) {
         }
 
         const data       = await geminiResponse.json();
-        const suggestion = data?.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '';
+        const suggestion = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts)
+            ? data.candidates[0].content.parts.map(function(p) { return p.text; }).join('')
+            : '';
 
         if (!suggestion) return res.status(502).json({ error: 'Gemini no devolvió texto.' });
 
-        return res.status(200).json({ suggestion });
+        return res.status(200).json({ suggestion: suggestion });
     } catch (err) {
         console.error('[IAFit/diet-advice] Error inesperado:', err);
         return res.status(500).json({ error: 'Error interno del servidor.' });
     }
-}
+};

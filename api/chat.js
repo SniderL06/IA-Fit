@@ -1,12 +1,11 @@
 // api/chat.js  –  Vercel Serverless Function
 // Endpoint: POST /api/chat
-// Puente seguro entre el frontend y la API de Gemini.
-// La GEMINI_API_KEY NUNCA sale al navegador: vive solo en las variables de entorno de Vercel.
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL   = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
 
-function sanitizeUserProfile(profile = {}) {
+function sanitizeUserProfile(profile) {
+    profile = profile || {};
     return {
         weight:               profile.weight,
         height:               profile.height,
@@ -42,19 +41,19 @@ REGLAS QUE DEBES SEGUIR SIEMPRE:
 6. Si el usuario pide algo fuera del alcance de fitness/bienestar, redirige la conversación con amabilidad hacia su entrenamiento.`;
 }
 
-function toGeminiContents(conversationHistory = [], newMessage) {
-    const contents = (conversationHistory || [])
-        .filter(m => m && typeof m.text === 'string')
+function toGeminiContents(conversationHistory, newMessage) {
+    conversationHistory = conversationHistory || [];
+    const contents = conversationHistory
+        .filter(function(m) { return m && typeof m.text === 'string'; })
         .slice(-8)
-        .map(m => ({
-            role:  m.sender === 'user' ? 'user' : 'model',
-            parts: [{ text: m.text }]
-        }));
+        .map(function(m) {
+            return { role: m.sender === 'user' ? 'user' : 'model', parts: [{ text: m.text }] };
+        });
     contents.push({ role: 'user', parts: [{ text: newMessage }] });
     return contents;
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -66,16 +65,20 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: 'Falta la variable de entorno GEMINI_API_KEY en Vercel.' });
     }
 
-    const { userProfile, safeExercises, conversationHistory, message } = req.body || {};
+    const body = req.body || {};
+    const message = body.message;
 
     if (!message || typeof message !== 'string') {
         return res.status(400).json({ error: 'Falta el campo "message".' });
     }
 
-    const systemPrompt = buildSystemPrompt(sanitizeUserProfile(userProfile), safeExercises || []);
-    const contents     = toGeminiContents(conversationHistory, message);
+    const systemPrompt = buildSystemPrompt(
+        sanitizeUserProfile(body.userProfile),
+        body.safeExercises || []
+    );
+    const contents = toGeminiContents(body.conversationHistory, message);
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + GEMINI_MODEL + ':generateContent?key=' + GEMINI_API_KEY;
 
     try {
         const geminiResponse = await fetch(url, {
@@ -83,7 +86,7 @@ export default async function handler(req, res) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 system_instruction: { parts: [{ text: systemPrompt }] },
-                contents,
+                contents: contents,
                 generationConfig: { temperature: 0.7, maxOutputTokens: 400 }
             })
         });
@@ -95,13 +98,15 @@ export default async function handler(req, res) {
         }
 
         const data  = await geminiResponse.json();
-        const reply = data?.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '';
+        const reply = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts)
+            ? data.candidates[0].content.parts.map(function(p) { return p.text; }).join('')
+            : '';
 
         if (!reply) return res.status(502).json({ error: 'Gemini no devolvió texto.' });
 
-        return res.status(200).json({ reply });
+        return res.status(200).json({ reply: reply });
     } catch (err) {
         console.error('[IAFit/chat] Error inesperado:', err);
         return res.status(500).json({ error: 'Error interno del servidor.' });
     }
-}
+};
