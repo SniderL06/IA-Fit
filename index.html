@@ -177,13 +177,40 @@
                         </div>
                     </div>
 
+                    <!-- Equipamiento específico (VOLUNTARIO) -->
                     <div class="form-group">
-                        <label for="initial-intensity"><i class="lucide-gauge"></i> Intensidad de Inicio</label>
+                        <label>
+                            <i class="lucide-wrench"></i>
+                            ¿Tienes algún equipo en casa?
+                            <span class="label-optional">Opcional</span>
+                        </label>
+                        <p class="form-hint">Si tienes alguna máquina o accesorio, te lo incluiremos en tu rutina. Puedes elegir varios o ninguno.</p>
+                        <div class="equipment-chips" id="equipment-chips">
+                            <button type="button" class="equip-chip" data-equipment="bicicleta-estatica"><i class="lucide-bike"></i> Bicicleta Estática</button>
+                            <button type="button" class="equip-chip" data-equipment="eliptica"><i class="lucide-activity"></i> Elíptica</button>
+                            <button type="button" class="equip-chip" data-equipment="caminadora"><i class="lucide-footprints"></i> Caminadora</button>
+                            <button type="button" class="equip-chip" data-equipment="mancuernas"><i class="lucide-dumbbell"></i> Mancuernas / Pesas</button>
+                            <button type="button" class="equip-chip" data-equipment="bandas"><i class="lucide-zap"></i> Bandas Elásticas</button>
+                            <button type="button" class="equip-chip" data-equipment="colchoneta"><i class="lucide-layout"></i> Colchoneta / Mat</button>
+                            <button type="button" class="equip-chip" data-equipment="barra-dominadas"><i class="lucide-align-center"></i> Barra Dominadas</button>
+                            <button type="button" class="equip-chip" data-equipment="kettlebell"><i class="lucide-package"></i> Kettlebell</button>
+                            <button type="button" class="equip-chip" data-equipment="remo"><i class="lucide-waves"></i> Máquina de Remo</button>
+                            <button type="button" class="equip-chip" data-equipment="escaladora"><i class="lucide-trending-up"></i> Escaladora / Stepper</button>
+                            <button type="button" class="equip-chip" data-equipment="fitball"><i class="lucide-circle-dot"></i> Fitball / Balón</button>
+                            <button type="button" class="equip-chip" data-equipment="trx"><i class="lucide-git-branch"></i> TRX / Suspensión</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <i class="lucide-gauge"></i> Intensidad de Inicio</label>
                         <select id="initial-intensity" required>
                             <option value="light" selected>Ligero (Ideal para comenzar sin presiones ni dolor extremo)</option>
                             <option value="normal">Normal (Estándar recomendado)</option>
                         </select>
                     </div>
+
+
                 </div>
 
                 <!-- Navegación del Wizard -->

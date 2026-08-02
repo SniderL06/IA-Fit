@@ -584,6 +584,7 @@ const DEFAULT_USER = {
     isHypertensive: false,
     hasJointPain: false,
     intensity: 'light', // 'light' o 'normal'
+    ownedEquipment: [],  // ej. ['bicicleta-estatica', 'eliptica']
     imc: 0
 };
 
@@ -793,6 +794,13 @@ resourceCards.forEach(card => {
     });
 });
 
+// Chips de equipamiento específico en casa (multi-selección, voluntario)
+document.querySelectorAll('.equip-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+        chip.classList.toggle('active');
+    });
+});
+
 // Mostrar/ocultar bloque de ciclo según el sexo elegido en el paso 1
 sexSelect.addEventListener('change', updateCycleFieldsVisibility);
 
@@ -827,9 +835,13 @@ onboardingForm.addEventListener('submit', (e) => {
         cycleLength: parseInt(cycleLengthInput.value) || 28
     };
 
-    // Recursos disponibles
-    const activeResourceCard = document.querySelector('.resource-card.active');
+    // Recursos disponibles (nivel general)
+    const activeResourceCard = document.querySelector('#resource-options .resource-card.active');
     state.user.resources = activeResourceCard ? activeResourceCard.getAttribute('data-resource') : 'none';
+
+    // Equipamiento específico en casa (voluntario)
+    state.user.ownedEquipment = Array.from(document.querySelectorAll('.equip-chip.active'))
+        .map(c => c.getAttribute('data-equipment'));
 
     // Intensidad
     state.user.intensity = intensitySelect.value;
@@ -1006,6 +1018,29 @@ function updateUIWithUserData() {
         if (cycleInfo) {
             badges.push({ icon: 'lucide-moon', label: cycleInfo.label, variant: 'accent' });
         }
+    }
+
+    // Badge de equipamiento específico (si seleccionó algo)
+    const owned = state.user.ownedEquipment || [];
+    if (owned.length > 0) {
+        const equipNames = {
+            'bicicleta-estatica': 'Bici Estática',
+            'eliptica': 'Elíptica',
+            'caminadora': 'Caminadora',
+            'mancuernas': 'Mancuernas',
+            'bandas': 'Bandas',
+            'colchoneta': 'Colchoneta',
+            'barra-dominadas': 'Barra',
+            'kettlebell': 'Kettlebell',
+            'remo': 'Máq. Remo',
+            'escaladora': 'Escaladora',
+            'fitball': 'Fitball',
+            'trx': 'TRX'
+        };
+        const label = owned.length === 1
+            ? (equipNames[owned[0]] || owned[0])
+            : `${owned.length} equipos en casa`;
+        badges.push({ icon: 'lucide-dumbbell', label, variant: 'accent' });
     }
 
     const resourceInfo = RESOURCE_LABELS[state.user.resources] || RESOURCE_LABELS.none;
@@ -1734,6 +1769,7 @@ function buildAIUserProfile() {
         injuryZones: state.user.injuryZones,
         cyclePhase: cycleInfo ? cycleInfo.phase : null,
         resources: state.user.resources,
+        ownedEquipment: state.user.ownedEquipment || [],
         intensity: state.user.intensity,
         imc: state.user.imc
     };
