@@ -16,7 +16,16 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "low",
         jointStress: [],
         lightAlternative: "Caminata suave de 10 min",
-        tipsDiabetic: "Ideal para realizar 15-30 minutos después de comer para reducir el pico de glucosa.",
+        muscleGroups: ['Piernas', 'Pantorrillas', 'Cardio'],
+        steps: [
+            'Párate derecho con los pies a la altura de los hombros.',
+            'Da pasos firmes aterrizando primero con el talón, luego la punta.',
+            'Mueve los brazos en oposición a las piernas para dar equilibrio e impulso.',
+            'Mantén la vista al frente y la espalda recta, sin encorvarte.',
+            'Respira de forma constante: inhala por la nariz y exhala por la boca.'
+        ],
+        benefits: 'Mejora la circulación, reduce la glucosa postprandial y fortalece el sistema cardiovascular sin impacto articular.',
+        tipsDiabetic: "Ideal realizarla 15-30 minutos después de comer para reducir el pico de glucosa.",
         tipsHypertensive: "Excelente ejercicio aeróbico para reducir la resistencia vascular de forma natural.",
         tipsJointPain: "Usa tenis amortiguados y prefiere terrenos planos.",
         visualSvg: `
@@ -56,6 +65,15 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "low",
         jointStress: ["knee", "hip"],
         lightAlternative: "Sentarse y levantarse de la silla despacio (5 repeticiones)",
+        muscleGroups: ['Cuádriceps', 'Glúteos', 'Core'],
+        steps: [
+            'Párate frente a la silla con manos en el respaldo para apoyarte.',
+            'Separa los pies a la altura de los hombros, punta de pies ligeramente hacia fuera.',
+            'Inhala y baja lentamente doblando las rodillas, como si fueras a sentarte.',
+            'Baja hasta los 90 grados (o menos si hay dolor) sin despegar los talones.',
+            'Exhala y sube empujando desde los talones. Mantén la espalda recta.'
+        ],
+        benefits: 'Tonifica cuádriceps y glúteos, mejora el equilibrio y el consumo de glucosa de forma muy eficiente.',
         tipsDiabetic: "El trabajo de grandes grupos musculares como las piernas consume mucha glucosa de manera eficiente.",
         tipsHypertensive: "Evita contener la respiración durante la bajada (maniobra de Valsalva).",
         tipsJointPain: "No bajes más allá de los 90 grados en la rodilla si hay dolor.",
@@ -94,9 +112,18 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "low",
         jointStress: ["wrist_elbow", "upper_back_shoulder"],
         lightAlternative: "Flexiones con inclinación alta (sobre mesa firme)",
-        tipsDiabetic: "Fortalecimiento del tren superior para balancear el metabolismo.",
-        tipsHypertensive: "No empujes con demasiada fuerza extrema para evitar picos de presión.",
-        tipsJointPain: "Mantén codos a 45 grados de tu cuerpo para proteger tus hombros.",
+        muscleGroups: ['Pecho', 'Hombros', 'Tríceps'],
+        steps: [
+            'Párate a unos 60 cm de una pared firme, con los pies alineados.',
+            'Apoya las palmas en la pared a la altura del pecho, separadas al ancho de los hombros.',
+            'Inhala e inclínate hacia la pared doblando los codos en 45 grados.',
+            'Exhala y empuja de regreso extendiendo los brazos hasta casi bloquear los codos.',
+            'Mantén el cuerpo en línea recta de cabeza a pies durante todo el movimiento.'
+        ],
+        benefits: 'Fortalece pecho, hombros y tríceps con bajo riesgo articular. Ideal para iniciar antes de flexiones en el suelo.',
+        tipsDiabetic: "Fortalecimiento del tren superior que ayuda a balancear el metabolismo.",
+        tipsHypertensive: "No empujes con demasiada fuerza para evitar picos de presión arterial.",
+        tipsJointPain: "Mantén los codos a 45 grados del cuerpo para proteger tus hombros.",
         visualSvg: `
             <svg viewBox="0 0 100 100" width="100%" height="100%" style="background:#141620; stroke:#6366f1; stroke-width:3; fill:none; stroke-linecap:round;">
                 <!-- Pared -->
@@ -127,9 +154,18 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "low",
         jointStress: [],
         lightAlternative: "Movilidad sentado",
-        tipsDiabetic: "Mejora la circulación y la flexibilidad de tendones.",
-        tipsHypertensive: "Ayuda a calentar progresivamente los vasos sanguíneos sin sobresaltos cardiacos.",
-        tipsJointPain: "El mejor lubricante para articulaciones desgastadas, hazlo sin dolor.",
+        muscleGroups: ['Articulaciones', 'Músc. Estabilizadores'],
+        steps: [
+            'Comienza por los tobillos: haz 8 círculos lentos hacia cada lado.',
+            'Sube a las rodillas: flexión y extensión suave, 10 veces cada una.',
+            'Continúa con las caderas: círculos amplios, 8 hacia cada dirección.',
+            'Trabaja los hombros: rotaciones completas hacia adelante y hacia atrás.',
+            'Todo lento y sin dolor — es calentamiento, no esfuerzo máximo.'
+        ],
+        benefits: 'Prepara las articulaciones para el ejercicio, mejora el rango de movimiento y reduce significativamente el riesgo de lesiones.',
+        tipsDiabetic: "Mejora la circulación periférica y la flexibilidad de tendones sin gasto calórico elevado.",
+        tipsHypertensive: "Calienta progresivamente los vasos sanguíneos sin generar picos de presión.",
+        tipsJointPain: "El mejor lubricante natural para articulaciones — hazlo siempre sin dolor.",
         visualSvg: `
             <svg viewBox="0 0 100 100" width="100%" height="100%" style="background:#141620; stroke:#6366f1; stroke-width:3; fill:none; stroke-linecap:round;">
                 <!-- Cabeza -->
@@ -161,9 +197,18 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "high",
         jointStress: ["knee", "ankle_foot"],
         lightAlternative: "Marcha en el sitio elevando rodillas suavemente",
-        tipsDiabetic: "Muy efectivo para bajar glucosa rápido, hidrátate bien antes y después.",
-        tipsHypertensive: "Evítalo si tu presión no está controlada; prefiere la caminata o marcha en el sitio.",
-        tipsJointPain: "El impacto puede molestar rodillas y tobillos, prueba la alternativa sin salto.",
+        muscleGroups: ['Piernas', 'Glúteos', 'Deltoides', 'Cardio'],
+        steps: [
+            'Párate con los pies juntos y los brazos pegados al cuerpo.',
+            'Salta separando los pies más allá de los hombros mientras alzas los brazos sobre la cabeza.',
+            'Salta de regreso a la posición inicial con pies juntos y brazos abajo.',
+            'Aterriza suavemente con las rodillas ligeramente dobladas para amortiguar.',
+            'Mantén un ritmo constante y respira durante todo el movimiento.'
+        ],
+        benefits: 'Eleva la frecuencia cardíaca rápidamente, quema calorías y activa todo el cuerpo en un tiempo mínimo.',
+        tipsDiabetic: "Muy efectivo para bajar glucosa rápidamente. Hidrátate bien antes y después.",
+        tipsHypertensive: "Evítalo si tu presión no está controlada; prefiere la marcha en el sitio.",
+        tipsJointPain: "El impacto puede afectar rodillas y tobillos — usa siempre la alternativa sin salto.",
         visualSvg: `
             <svg viewBox="0 0 100 100" width="100%" height="100%" style="background:#141620; stroke:#6366f1; stroke-width:3; fill:none; stroke-linecap:round;">
                 <circle cx="50" cy="22" r="6" stroke="#10b981" />
@@ -197,9 +242,18 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "moderate",
         jointStress: [],
         lightAlternative: "10 minutos a resistencia mínima",
-        tipsDiabetic: "El esfuerzo sostenido y controlado ayuda a estabilizar la glucosa.",
-        tipsHypertensive: "Mantén una resistencia moderada y evita picos de esfuerzo repentinos.",
-        tipsJointPain: "Una de las mejores opciones cardio si tienes molestias de rodilla o cadera.",
+        muscleGroups: ['Cuádriceps', 'Pantorrillas', 'Cardio'],
+        steps: [
+            'Ajusta el asiento para que la rodilla quede ligeramente doblada al extender la pierna.',
+            'Coloca los pies firmemente en los pedales y agarra el manubrio con comodidad.',
+            'Comienza pedaleando a ritmo suave durante 2-3 minutos de calentamiento.',
+            'Aumenta gradualmente la resistencia o el ritmo según cómo te sientas.',
+            'Mantén la espalda apoyada y los hombros relajados durante toda la sesión.'
+        ],
+        benefits: 'Cardio de bajo impacto ideal para proteger rodillas y caderas, mejora la resistencia cardiovascular de forma segura.',
+        tipsDiabetic: "El esfuerzo sostenido y controlado ayuda a estabilizar los niveles de glucosa.",
+        tipsHypertensive: "Mantén resistencia moderada y evita picos de esfuerzo repentinos.",
+        tipsJointPain: "Una de las mejores opciones de cardio si tienes molestias de rodilla o cadera.",
         visualSvg: `
             <svg viewBox="0 0 100 100" width="100%" height="100%" style="background:#141620; stroke:#6366f1; stroke-width:3; fill:none; stroke-linecap:round;">
                 <circle cx="30" cy="80" r="10" stroke="rgba(255,255,255,0.3)" />
@@ -227,9 +281,18 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "low",
         jointStress: [],
         lightAlternative: "Remo con banda de menor resistencia, 8 reps",
-        tipsDiabetic: "El trabajo muscular de espalda ayuda al consumo general de glucosa.",
-        tipsHypertensive: "Exhala al jalar la banda, nunca contengas la respiración.",
-        tipsJointPain: "Muy seguro para espalda y hombros por su bajo impacto en las articulaciones.",
+        muscleGroups: ['Dorsal', 'Trapecios', 'Bíceps', 'Postura'],
+        steps: [
+            'Siéntate en silla o en el suelo con la banda anclada frente a ti a la altura del pecho.',
+            'Sostén los extremos de la banda con ambas manos, brazos extendidos al frente.',
+            'Jala la banda hacia tu abdomen apretando los omóplatos al final del recorrido (exhala).',
+            'Regresa lentamente extendiendo los brazos y controlando la banda (inhala).',
+            'Mantén la espalda recta en todo momento — no te encorves al jalar.'
+        ],
+        benefits: 'Fortalece la espalda alta y mejora la postura, combatiendo el efecto de pasar muchas horas sentado.',
+        tipsDiabetic: "El trabajo muscular de espalda contribuye al consumo general de glucosa.",
+        tipsHypertensive: "Exhala al jalar la banda; nunca contengas la respiración durante el esfuerzo.",
+        tipsJointPain: "Muy seguro para espalda y hombros por el bajo impacto articular del movimiento.",
         visualSvg: `
             <svg viewBox="0 0 100 100" width="100%" height="100%" style="background:#141620; stroke:#6366f1; stroke-width:3; fill:none; stroke-linecap:round;">
                 <line x1="20" y1="55" x2="20" y2="80" stroke="rgba(255,255,255,0.3)" />
@@ -255,9 +318,18 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "low",
         jointStress: ["wrist_elbow"],
         lightAlternative: "Curl sin peso o con botellas de agua",
+        muscleGroups: ['Bíceps', 'Antebrazos'],
+        steps: [
+            'Párate o siéntate con una mancuerna en cada mano, palmas hacia adelante.',
+            'Mantén los codos pegados al cuerpo y la espalda completamente recta.',
+            'Dobla los codos subiendo las mancuernas hacia los hombros (exhala).',
+            'Baja lentamente de regreso a la posición inicial controlando el movimiento (inhala).',
+            'Evita balancear el cuerpo — el movimiento debe ser solo de los antebrazos.'
+        ],
+        benefits: 'Tonifica los bíceps y mejora la fuerza funcional del brazo para actividades cotidianas.',
         tipsDiabetic: "Ganar masa muscular mejora la sensibilidad a la insulina a largo plazo.",
         tipsHypertensive: "Usa pesos ligeros y evita apretar demasiado fuerte el agarre.",
-        tipsJointPain: "Si sientes molestia en muñeca o codo, reduce el peso o el rango de movimiento.",
+        tipsJointPain: "Si hay molestia en muñeca o codo, reduce el peso o el rango de movimiento.",
         visualSvg: `
             <svg viewBox="0 0 100 100" width="100%" height="100%" style="background:#141620; stroke:#6366f1; stroke-width:3; fill:none; stroke-linecap:round;">
                 <circle cx="50" cy="25" r="6" stroke="#10b981" />
@@ -283,8 +355,17 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "low",
         jointStress: ["knee", "hip"],
         lightAlternative: "Rango de movimiento corto y carga mínima",
-        tipsDiabetic: "El trabajo de piernas es de los más efectivos para consumir glucosa.",
-        tipsHypertensive: "No bloquees las rodillas al extender y exhala en el empuje.",
+        muscleGroups: ['Cuádriceps', 'Glúteos', 'Isquiotibiales'],
+        steps: [
+            'Siéntate en la máquina y ajusta el asiento para que las rodillas estén a ~90 grados.',
+            'Coloca los pies en la plataforma separados al ancho de los hombros.',
+            'Empuja la plataforma extendiendo las piernas sin bloquear completamente las rodillas (exhala).',
+            'Regresa lentamente controlando el peso, sin dejar que las rodillas superen los 90 grados (inhala).',
+            'Nunca despegues la espalda ni el coxis del respaldo durante el movimiento.'
+        ],
+        benefits: 'Fortalece todo el tren inferior de forma guiada y segura, con mínimo estrés en la columna vertebral.',
+        tipsDiabetic: "El trabajo de piernas es de los más efectivos para consumir glucosa muscularmente.",
+        tipsHypertensive: "No bloquees las rodillas al extender y exhala siempre en el empuje.",
         tipsJointPain: "Ajusta el rango de movimiento para no forzar rodilla o cadera más allá de lo cómodo.",
         visualSvg: `
             <svg viewBox="0 0 100 100" width="100%" height="100%" style="background:#141620; stroke:#6366f1; stroke-width:3; fill:none; stroke-linecap:round;">
@@ -309,7 +390,16 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "low",
         jointStress: [],
         lightAlternative: "Rotaciones aún más lentas, sentado",
-        tipsDiabetic: "Ayuda a liberar tensión sin exigir esfuerzo metabólico.",
+        muscleGroups: ['Cuello', 'Trapecios', 'Hombros'],
+        steps: [
+            'Siéntate o párate con la espalda recta y los hombros completamente relajados.',
+            'Inclina la cabeza hacia el lado derecho, aguanta 3 segundos. Luego al lado izquierdo.',
+            'Lleva la barbilla al pecho suavemente y aguanta 3 segundos. No fuerces.',
+            'Haz círculos lentos con los hombros: 8 hacia adelante y 8 hacia atrás.',
+            'Termina con los brazos estirados hacia los lados para elongar los trapecios.'
+        ],
+        benefits: 'Alivia la tensión acumulada en cuello y hombros, mejora la movilidad cervical y reduce dolores de cabeza por tensión.',
+        tipsDiabetic: "Ayuda a liberar tensión sin exigir esfuerzo metabólico significativo.",
         tipsHypertensive: "Muy seguro, ideal para calentar o para días de descanso activo.",
         tipsJointPain: "Diseñado especialmente para aliviar molestias de cuello y hombro.",
         visualSvg: `
@@ -337,8 +427,17 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "low",
         jointStress: [],
         lightAlternative: "Versión sentado en silla, con menos rango",
-        tipsDiabetic: "Ejercicio de bajo gasto calórico, pero excelente para bienestar general.",
-        tipsHypertensive: "Evita mantener la cabeza muy abajo por periodos largos.",
+        muscleGroups: ['Espalda Baja', 'Core', 'Columna'],
+        steps: [
+            'Colócate en cuatro puntos: manos debajo de los hombros, rodillas debajo de las caderas.',
+            'Inhala: hunde el abdomen y deja que la espalda se arquee hacia abajo (posición "Vaca", cabeza arriba).',
+            'Exhala: redondea la espalda hacia el techo metiendo el abdomen (posición "Gato", cabeza abajo).',
+            'Alterna entre ambas posiciones de forma fluida durante 8-10 repeticiones.',
+            'El movimiento debe ser suave y continuo, escucha a tu cuerpo en todo momento.'
+        ],
+        benefits: 'Descomprime la columna vertebral, mejora la flexibilidad de la espalda baja y activa los músculos profundos del core.',
+        tipsDiabetic: "Ejercicio de bajo gasto calórico pero excelente para el bienestar físico general.",
+        tipsHypertensive: "Evita mantener la cabeza muy abajo por períodos prolongados.",
         tipsJointPain: "Uno de los mejores movimientos para descomprimir la espalda baja.",
         visualSvg: `
             <svg viewBox="0 0 100 100" width="100%" height="100%" style="background:#141620; stroke:#6366f1; stroke-width:3; fill:none; stroke-linecap:round;">
@@ -363,9 +462,18 @@ const EXERCISES_DATABASE = [
         cardioIntensity: "low",
         jointStress: ["wrist_elbow"],
         lightAlternative: "Plancha en antebrazos apoyada en mesa o pared",
+        muscleGroups: ['Core', 'Abdomen', 'Glúteos', 'Hombros'],
+        steps: [
+            'Colócate boca abajo apoyando las rodillas y las palmas (o antebrazos si molestan las muñecas).',
+            'Alinea los hombros con las manos y forma una línea recta de cabeza a rodillas.',
+            'Contrae el abdomen sin dejar que las caderas suban ni se hundan.',
+            'Mantén la posición respirando de forma constante durante 15-30 segundos.',
+            'Descansa 30 segundos entre series. Nunca aguantes la respiración.'
+        ],
+        benefits: 'Fortalece todo el core de forma isométrica, mejora la estabilidad de la columna y la postura general.',
         tipsDiabetic: "Fortalecer el core mejora la postura para el resto de tus ejercicios diarios.",
-        tipsHypertensive: "No contengas la respiración, respira de forma constante durante el sostén.",
-        tipsJointPain: "Si tus muñecas molestan, apóyate en los antebrazos en lugar de las manos.",
+        tipsHypertensive: "No contengas la respiración; respira de forma constante durante el sostén.",
+        tipsJointPain: "Si las muñecas molestan, apóyate en los antebrazos en lugar de las manos.",
         visualSvg: `
             <svg viewBox="0 0 100 100" width="100%" height="100%" style="background:#141620; stroke:#6366f1; stroke-width:3; fill:none; stroke-linecap:round;">
                 <circle cx="25" cy="45" r="6" stroke="#10b981" />
@@ -1433,74 +1541,141 @@ function renderExercises(exercises) {
         ? computeCyclePhase(state.user.cycleTracking.lastPeriodDate, state.user.cycleTracking.cycleLength)
         : null;
 
+    if (exercises.length === 0) {
+        exerciseGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--text-muted);font-size:0.9rem;"><i class="lucide-search" style="font-size:2rem;display:block;margin-bottom:12px;"></i>No encontramos ejercicios con ese filtro.</div>`;
+        return;
+    }
+
     exercises.forEach(ex => {
         const card = document.createElement('div');
         const evaluation = evaluateExerciseForUser(ex, state.user, cycleInfo);
         card.className = `exercise-card${evaluation.safe ? '' : ' not-recommended'}`;
 
-        let typeName = 'Cardio';
-        let typeIcon = 'lucide-footprints';
-        if (ex.category === 'fuerza') {
-            typeName = 'Fuerza';
-            typeIcon = 'lucide-dumbbell';
-        } else if (ex.category === 'movilidad') {
-            typeName = 'Movilidad';
-            typeIcon = 'lucide-refresh-cw';
-        }
+        const typeName = ex.category === 'fuerza' ? 'Fuerza' : ex.category === 'movilidad' ? 'Movilidad' : 'Cardio';
+        const typeClass = ex.category;
 
-        let tipsHtml = '';
-        if (state.user.isDiabetic && ex.tipsDiabetic) {
-            tipsHtml += `
-                <div style="margin-top: 8px; padding: 8px; background: rgba(245, 158, 11, 0.1); border-left: 3px solid var(--warning); border-radius: 6px; font-size: 0.75rem; color: #f3f4f6;">
-                    <strong>Consejo Diabetes:</strong> ${ex.tipsDiabetic}
-                </div>
-            `;
-        }
-        if (state.user.isHypertensive && ex.tipsHypertensive) {
-            tipsHtml += `
-                <div style="margin-top: 8px; padding: 8px; background: rgba(239, 68, 68, 0.1); border-left: 3px solid #ef4444; border-radius: 6px; font-size: 0.75rem; color: #f3f4f6;">
-                    <strong>Consejo Presión Alta:</strong> ${ex.tipsHypertensive}
-                </div>
-            `;
-        }
-        if (state.user.hasJointPain && ex.tipsJointPain) {
-            tipsHtml += `
-                <div style="margin-top: 8px; padding: 8px; background: rgba(99, 102, 241, 0.1); border-left: 3px solid var(--primary); border-radius: 6px; font-size: 0.75rem; color: #f3f4f6;">
-                    <strong>Consejo Dolor Articular:</strong> ${ex.tipsJointPain}
-                </div>
-            `;
-        }
+        const diffClass = ex.difficulty === 'Baja' ? 'diff-baja' : ex.difficulty === 'Media' ? 'diff-media' : 'diff-alta';
 
-        // Etiqueta de recomendación según el motor de reglas
-        let recommendationHtml = '';
-        if (evaluation.safe) {
-            recommendationHtml = `<div class="recommendation-tag positive"><i class="lucide-check-circle"></i> Recomendado para ti</div>`;
-        } else {
-            recommendationHtml = `<div class="recommendation-tag negative"><i class="lucide-alert-triangle"></i> No recomendado: ${evaluation.reasons.blocking[0]}</div>`;
-        }
+        const muscleTags = (ex.muscleGroups || []).slice(0, 3)
+            .map(m => `<span class="muscle-tag">${m}</span>`).join('');
 
-        // Usar ilustración SVG o icono de fallback
+        const recommendationHtml = evaluation.safe
+            ? `<div class="recommendation-tag positive"><i class="lucide-check-circle"></i> Recomendado</div>`
+            : `<div class="recommendation-tag negative"><i class="lucide-alert-triangle"></i> ${evaluation.reasons.blocking[0]}</div>`;
+
         const visualContent = ex.visualSvg ? ex.visualSvg : `<i class="${ex.icon}"></i>`;
 
         card.innerHTML = `
             <div class="exercise-img-ph">
                 ${visualContent}
-                <span class="exercise-type-tag">${typeName}</span>
+                <span class="exercise-type-tag ${typeClass}">${typeName}</span>
+                <span class="exercise-tap-hint"><i class="lucide-eye"></i> Ver cómo hacerlo</span>
             </div>
             <div class="exercise-card-info">
                 <h4>${ex.name}</h4>
                 ${recommendationHtml}
-                <p>${ex.desc}</p>
-                <div class="exercise-meta">
-                    <span>Dificultad: <strong>${ex.difficulty}</strong></span>
-                    <span>Duración: <strong>${ex.time}</strong></span>
+                <div class="exercise-meta-row">
+                    <span class="exercise-meta-badge ${diffClass}"><i class="lucide-gauge"></i> ${ex.difficulty}</span>
+                    <span class="exercise-meta-badge"><i class="lucide-clock"></i> ${ex.time}</span>
                 </div>
-                ${tipsHtml}
+                ${muscleTags ? `<div class="muscle-tags">${muscleTags}</div>` : ''}
+                <p>${ex.desc}</p>
             </div>
         `;
+
+        card.addEventListener('click', () => openExerciseModal(ex, evaluation));
         exerciseGrid.appendChild(card);
     });
 }
+
+// --- MODAL DE DETALLE DEL EJERCICIO ---
+const modalOverlay  = document.getElementById('modal-overlay');
+const exerciseModal = document.getElementById('exercise-modal');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalSvgArea  = document.getElementById('modal-svg-area');
+const modalTitle    = document.getElementById('modal-title');
+const modalMeta     = document.getElementById('modal-meta');
+const modalMuscles  = document.getElementById('modal-muscles');
+const modalSteps    = document.getElementById('modal-steps');
+const modalBenefits = document.getElementById('modal-benefits');
+const modalHealthTips = document.getElementById('modal-health-tips');
+
+function openExerciseModal(ex, evaluation) {
+    // SVG
+    modalSvgArea.innerHTML = ex.visualSvg || `<i class="${ex.icon}" style="font-size:4rem;color:var(--primary);"></i>`;
+
+    // Título
+    modalTitle.textContent = ex.name;
+
+    // Meta badges
+    const typeName = ex.category === 'fuerza' ? 'Fuerza' : ex.category === 'movilidad' ? 'Movilidad' : 'Cardio';
+    const diffClass = ex.difficulty === 'Baja' ? 'diff-baja' : ex.difficulty === 'Media' ? 'diff-media' : 'diff-alta';
+    const recHtml = evaluation.safe
+        ? `<span class="recommendation-tag positive"><i class="lucide-check-circle"></i> Recomendado</span>`
+        : `<span class="recommendation-tag negative"><i class="lucide-x-circle"></i> No recomendado</span>`;
+    modalMeta.innerHTML = `
+        ${recHtml}
+        <span class="exercise-meta-badge ${diffClass}"><i class="lucide-gauge"></i> ${ex.difficulty}</span>
+        <span class="exercise-meta-badge"><i class="lucide-clock"></i> ${ex.time}</span>
+        <span class="exercise-meta-badge"><i class="lucide-tag"></i> ${typeName}</span>
+    `;
+
+    // Músculosgrupos
+    modalMuscles.innerHTML = (ex.muscleGroups || []).map(m => `<span class="modal-muscle-chip">${m}</span>`).join('');
+
+    // Pasos
+    modalSteps.innerHTML = (ex.steps || ['Sigue las indicaciones visuales de la animación.']).map((step, i) => `
+        <div class="step-item">
+            <span class="step-num">${i + 1}</span>
+            <span class="step-text">${step}</span>
+        </div>
+    `).join('');
+
+    // Beneficios
+    modalBenefits.textContent = ex.benefits || ex.desc;
+
+    // Tips de salud
+    let healthHtml = '';
+    if (state.user.isDiabetic && ex.tipsDiabetic) {
+        healthHtml += `<div class="exercise-tip diabetic"><i class="lucide-shield-alert"></i><span><strong>Diabetes:</strong> ${ex.tipsDiabetic}</span></div>`;
+    }
+    if (state.user.isHypertensive && ex.tipsHypertensive) {
+        healthHtml += `<div class="exercise-tip hypertensive"><i class="lucide-heart-pulse"></i><span><strong>Presión Alta:</strong> ${ex.tipsHypertensive}</span></div>`;
+    }
+    if (state.user.hasJointPain && ex.tipsJointPain) {
+        healthHtml += `<div class="exercise-tip joint"><i class="lucide-bone"></i><span><strong>Articulaciones:</strong> ${ex.tipsJointPain}</span></div>`;
+    }
+    if (healthHtml) {
+        modalHealthTips.innerHTML = `<div class="modal-section-title">Consejos para tu condición</div>${healthHtml}`;
+    } else {
+        modalHealthTips.innerHTML = '';
+    }
+
+    // Abrir
+    modalOverlay.classList.add('active');
+    exerciseModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeExerciseModal() {
+    modalOverlay.classList.remove('active');
+    exerciseModal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+modalCloseBtn.addEventListener('click', closeExerciseModal);
+modalOverlay.addEventListener('click', closeExerciseModal);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeExerciseModal(); });
+
+// Swipe down to close modal on mobile
+(function setupModalSwipe() {
+    let startY = 0;
+    exerciseModal.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+    exerciseModal.addEventListener('touchend', e => {
+        const diff = e.changedTouches[0].clientY - startY;
+        if (diff > 80) closeExerciseModal();
+    }, { passive: true });
+})();
 
 // Búsqueda y Filtro de Ejercicios
 exerciseSearch.addEventListener('input', filterExercises);
