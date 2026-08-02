@@ -1,0 +1,16 @@
+# Secretos — NUNCA subir a Git
+server/.env
+.env
+
+# Dependencias locales
+server/node_modules/
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini

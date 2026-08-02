@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAFit - Tu Entrenador Personal Inteligente</title>
+    <meta name="description" content="Inicia tu cambio físico hoy con rutinas personalizadas por IA adaptadas a tu salud, peso, altura y estilo de vida.">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Icons (Lucide Icons CSS) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.341.0/font/lucide.min.css">
+</head>
+<body>
+    <!-- Pantalla de Bienvenida / Formulario Inicial -->
+    <div id="onboarding-screen" class="screen active">
+        <div class="glass-card onboarding-card">
+            <div class="brand">
+                <i class="lucide-sparkles brand-icon"></i>
+                <h1>IA<span>Fit</span></h1>
+            </div>
+            <p class="subtitle">Inicia tu cambio físico hoy. Tu entrenamiento se adapta a ti, no tú al entrenamiento.</p>
+            
+            <form id="onboarding-form">
+                <!-- Indicador de Progreso del Wizard -->
+                <div class="wizard-progress" id="wizard-progress">
+                    <div class="wizard-dot active" data-step="1"><span>1</span></div>
+                    <div class="wizard-line"></div>
+                    <div class="wizard-dot" data-step="2"><span>2</span></div>
+                    <div class="wizard-line"></div>
+                    <div class="wizard-dot" data-step="3"><span>3</span></div>
+                    <div class="wizard-line"></div>
+                    <div class="wizard-dot" data-step="4"><span>4</span></div>
+                </div>
+
+                <!-- PASO 1: Datos básicos -->
+                <div class="wizard-step active" data-step="1">
+                    <h3 class="wizard-step-title">Datos básicos</h3>
+                    <p class="wizard-step-desc">Lo esencial para calcular tu punto de partida.</p>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="weight"><i class="lucide-weight"></i> Peso (kg)</label>
+                            <input type="number" id="weight" required min="30" max="250" placeholder="Ej. 70">
+                        </div>
+                        <div class="form-group">
+                            <label for="height"><i class="lucide-ruler"></i> Altura (cm)</label>
+                            <input type="number" id="height" required min="100" max="250" placeholder="Ej. 175">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="age"><i class="lucide-calendar"></i> Edad</label>
+                            <input type="number" id="age" required min="12" max="100" placeholder="Ej. 30">
+                        </div>
+                        <div class="form-group">
+                            <label for="sex-select"><i class="lucide-user"></i> Sexo</label>
+                            <select id="sex-select" required>
+                                <option value="" disabled selected class="select-option">Selecciona</option>
+                                <option value="female" class="select-option">Mujer</option>
+                                <option value="male" class="select-option">Hombre</option>
+                                <option value="unspecified" class="select-option">Prefiero no decirlo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="activity-level"><i class="lucide-activity"></i> Nivel de Actividad</label>
+                        <select id="activity-level" required>
+                            <option value="" disabled selected class="select-option">Selecciona tu estado diario</option>
+                            <option value="sedentary" class="select-option">Sedentario (Trabajo de oficina, poco o ningún ejercicio)</option>
+                            <option value="moderate" class="select-option">Moderadamente Activo (Camina diario, ejercicio 2-3 veces/semana)</option>
+                            <option value="active" class="select-option">Muy Activo (Trabajo físico o entrenamiento pesado regular)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- PASO 2: Salud cardiovascular, respiratoria y metabólica -->
+                <div class="wizard-step" data-step="2">
+                    <h3 class="wizard-step-title">Salud cardiorrespiratoria y metabólica</h3>
+                    <p class="wizard-step-desc">Esto nos ayuda a controlar la intensidad y evitar riesgos.</p>
+
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="is-diabetic">
+                                <span>Diabetes / Control de Glucosa</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cardio-condition"><i class="lucide-heart-pulse"></i> Condición Cardiovascular</label>
+                        <select id="cardio-condition" required>
+                            <option value="none" class="select-option">Ninguna</option>
+                            <option value="hypertension" class="select-option">Hipertensión / Presión Alta</option>
+                            <option value="arrhythmia" class="select-option">Arritmia</option>
+                            <option value="heart_failure" class="select-option">Insuficiencia Cardíaca</option>
+                            <option value="post_infarction" class="select-option">Post-Infarto / Cirugía Cardíaca Reciente</option>
+                            <option value="other" class="select-option">Otra condición cardíaca</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="respiratory-condition"><i class="lucide-wind"></i> Condición Respiratoria</label>
+                        <select id="respiratory-condition" required>
+                            <option value="none" class="select-option">Ninguna</option>
+                            <option value="asthma" class="select-option">Asma</option>
+                            <option value="copd" class="select-option">EPOC</option>
+                            <option value="other" class="select-option">Otra condición respiratoria</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- PASO 3: Lesiones por zona del cuerpo -->
+                <div class="wizard-step" data-step="3">
+                    <h3 class="wizard-step-title">¿Tienes alguna lesión o molestia?</h3>
+                    <p class="wizard-step-desc">Selecciona todas las zonas que apliquen. Adaptaremos los ejercicios para no sobrecargarlas.</p>
+
+                    <div class="zone-selector" id="zone-selector">
+                        <button type="button" class="zone-chip" data-zone="knee"><i class="lucide-bone"></i> Rodilla</button>
+                        <button type="button" class="zone-chip" data-zone="hip"><i class="lucide-bone"></i> Cadera</button>
+                        <button type="button" class="zone-chip" data-zone="lower_back"><i class="lucide-bone"></i> Espalda Baja</button>
+                        <button type="button" class="zone-chip" data-zone="upper_back_shoulder"><i class="lucide-bone"></i> Espalda Alta / Hombro</button>
+                        <button type="button" class="zone-chip" data-zone="neck"><i class="lucide-bone"></i> Cuello</button>
+                        <button type="button" class="zone-chip" data-zone="wrist_elbow"><i class="lucide-bone"></i> Muñeca / Codo</button>
+                        <button type="button" class="zone-chip" data-zone="ankle_foot"><i class="lucide-bone"></i> Tobillo / Pie</button>
+                        <button type="button" class="zone-chip zone-chip-none active" data-zone="none"><i class="lucide-check"></i> Ninguna</button>
+                    </div>
+                </div>
+
+                <!-- PASO 4: Ciclo menstrual, recursos e intensidad -->
+                <div class="wizard-step" data-step="4">
+                    <h3 class="wizard-step-title">Últimos ajustes</h3>
+                    <p class="wizard-step-desc">Con esto ya tenemos todo para armar tu plan.</p>
+
+                    <div class="form-group cycle-fields" id="cycle-fields-group" style="display:none;">
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="cycle-tracking-enabled">
+                                <span>Quiero que mi rutina tome en cuenta mi ciclo menstrual</span>
+                            </label>
+                        </div>
+                        <div class="form-grid cycle-detail-grid" id="cycle-detail-grid" style="display:none; margin-top: 14px;">
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label for="last-period-date"><i class="lucide-calendar"></i> Inicio de tu último período</label>
+                                <input type="date" id="last-period-date">
+                            </div>
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label for="cycle-length"><i class="lucide-repeat"></i> Duración del ciclo (días)</label>
+                                <input type="number" id="cycle-length" min="20" max="45" placeholder="Ej. 28">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="lucide-home"></i> Recursos y Equipo Disponible</label>
+                        <div class="resource-options" id="resource-options">
+                            <button type="button" class="resource-card active" data-resource="none">
+                                <i class="lucide-home"></i>
+                                <span class="resource-title">Solo en Casa</span>
+                                <span class="resource-desc">Sin ningún equipo, peso corporal</span>
+                            </button>
+                            <button type="button" class="resource-card" data-resource="basic">
+                                <i class="lucide-dumbbell"></i>
+                                <span class="resource-title">Equipo Básico</span>
+                                <span class="resource-desc">Bandas elásticas o mancuernas</span>
+                            </button>
+                            <button type="button" class="resource-card" data-resource="gym">
+                                <i class="lucide-building-2"></i>
+                                <span class="resource-title">Gimnasio</span>
+                                <span class="resource-desc">Acceso a máquinas y pesas</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="initial-intensity"><i class="lucide-gauge"></i> Intensidad de Inicio</label>
+                        <select id="initial-intensity" required>
+                            <option value="light" selected>Ligero (Ideal para comenzar sin presiones ni dolor extremo)</option>
+                            <option value="normal">Normal (Estándar recomendado)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Navegación del Wizard -->
+                <div class="wizard-nav">
+                    <button type="button" id="btn-wizard-back" class="btn btn-secondary" style="visibility:hidden;">
+                        <i class="lucide-arrow-left"></i>
+                        <span>Atrás</span>
+                    </button>
+                    <button type="button" id="btn-wizard-next" class="btn btn-primary">
+                        <span>Siguiente</span>
+                        <i class="lucide-arrow-right"></i>
+                    </button>
+                    <button type="submit" id="btn-wizard-submit" class="btn btn-primary" style="display:none;">
+                        <span>Generar mi Plan con IA</span>
+                        <i class="lucide-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contenedor Principal (Dashboard y Secciones) -->
+    <div id="main-app" class="screen">
+        <header class="app-header">
+            <div class="brand">
+                <i class="lucide-sparkles brand-icon"></i>
+                <h2>IA<span>Fit</span></h2>
+            </div>
+            <div class="user-summary" id="header-user-summary">
+                <div class="badges-dynamic" id="badges-dynamic"></div>
+                <button id="btn-edit-profile" class="btn-icon" title="Editar Perfil"><i class="lucide-user-cog"></i></button>
+            </div>
+        </header>
+
+        <!-- Navegación Principal -->
+        <nav class="app-nav">
+            <button class="nav-item active" data-target="tab-dashboard">
+                <i class="lucide-layout-dashboard"></i>
+                <span>Progreso</span>
+            </button>
+            <button class="nav-item" data-target="tab-exercises">
+                <i class="lucide-dumbbell"></i>
+                <span>Ejercicios</span>
+            </button>
+            <button class="nav-item" data-target="tab-chat">
+                <i class="lucide-bot"></i>
+                <span>Asistente IA</span>
+            </button>
+            <button class="nav-item" data-target="tab-diet">
+                <i class="lucide-utensils"></i>
+                <span>Dieta</span>
+            </button>
+        </nav>
+
+        <main class="app-content">
+            <!-- Pestaña: Dashboard / Progreso -->
+            <section id="tab-dashboard" class="tab-pane active">
+                <div class="dashboard-grid">
+                    <!-- Tarjeta IMC -->
+                    <div class="glass-card status-card">
+                        <div class="card-header">
+                            <h3>Tu Estado Actual</h3>
+                            <i class="lucide-heart-pulse icon-accent"></i>
+                        </div>
+                        <div class="imc-display">
+                            <span class="imc-num" id="imc-value">22.4</span>
+                            <span class="imc-status" id="imc-status">Peso Saludable</span>
+                        </div>
+                        <div class="imc-range-bar">
+                            <div class="imc-indicator" id="imc-indicator" style="left: 45%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta Recomendación Diaria -->
+                    <div class="glass-card advice-card">
+                        <div class="card-header">
+                            <h3>Consejo del Asistente</h3>
+                            <i class="lucide-sparkles icon-accent"></i>
+                        </div>
+                        <p id="dashboard-daily-advice">¡Excelente inicio! Para tu nivel de actividad sedentario y meta ligera, te sugerimos iniciar con 15 minutos de caminata rápida y ejercicios de movilidad articular hoy.</p>
+                    </div>
+
+                    <!-- Datos Globales de la Comunidad -->
+                    <div class="glass-card community-card">
+                        <div class="card-header">
+                            <h3>Datos de Apoyo Mutuo</h3>
+                            <i class="lucide-users icon-accent"></i>
+                        </div>
+                        <p class="community-desc">Compartimos datos anónimos para motivarnos mutuamente en el cambio:</p>
+                        <div class="stats-list">
+                            <div class="stat-item">
+                                <div class="stat-label">Usuarios con diabetes que bajaron glucosa</div>
+                                <div class="stat-progress-bar"><div class="progress" style="width: 88%;"></div></div>
+                                <span class="stat-value">88%</span>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Usuarios activos que iniciaron en "Ligero"</div>
+                                <div class="stat-progress-bar"><div class="progress" style="width: 94%;"></div></div>
+                                <span class="stat-value">94%</span>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Días promedio de constancia mensual</div>
+                                <div class="stat-progress-bar"><div class="progress" style="width: 73%;"></div></div>
+                                <span class="stat-value">22 días</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Plan Rápido Generado -->
+                    <div class="glass-card plan-quick-card">
+                        <div class="card-header">
+                            <h3>Tu Rutina de Hoy</h3>
+                            <button id="btn-quick-adjust" class="btn btn-secondary btn-sm">Aligerar más</button>
+                        </div>
+                        <div class="quick-routine-list" id="quick-routine-list">
+                            <!-- Inyectado dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pestaña: Ejercicios -->
+            <section id="tab-exercises" class="tab-pane">
+                <div class="search-bar-container">
+                    <div class="search-wrapper">
+                        <i class="lucide-search search-icon"></i>
+                        <input type="text" id="exercise-search" placeholder="Buscar ejercicio (ej. Flexiones, Caminata)...">
+                    </div>
+                    <div class="filter-chips">
+                        <button class="chip active" data-filter="all">Todos</button>
+                        <button class="chip" data-filter="recomendado">Recomendados para ti</button>
+                        <button class="chip" data-filter="cardio">Cardio / Suave</button>
+                        <button class="chip" data-filter="fuerza">Fuerza / Tonificar</button>
+                        <button class="chip" data-filter="movilidad">Movilidad / Estirar</button>
+                    </div>
+                </div>
+
+                <div class="exercise-grid" id="exercise-grid">
+                    <!-- Inyectado dinámicamente -->
+                </div>
+            </section>
+
+            <!-- Pestaña: Chat IA -->
+            <section id="tab-chat" class="tab-pane">
+                <div class="chat-container glass-card">
+                    <div class="chat-header">
+                        <div class="bot-info">
+                            <div class="avatar"><i class="lucide-bot"></i></div>
+                            <div>
+                                <h4>Entrenador IAFit</h4>
+                                <span class="status-indicator">En línea (Atención 24/7)</span>
+                            </div>
+                        </div>
+                        <div class="chat-actions">
+                            <button id="btn-chat-reset" class="btn-icon" title="Reiniciar conversación"><i class="lucide-refresh-cw"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- Mensajes inyectados dinámicamente -->
+                    </div>
+
+                    <div class="chat-quick-actions">
+                        <button class="quick-btn" data-action="modify">"Quiero aligerar mi rutina hoy"</button>
+                        <button class="quick-btn" data-action="diabetic-tips">"Consejos para entrenar con diabetes"</button>
+                        <button class="quick-btn" data-action="routine">"Créame una rutina de 10 min"</button>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" id="chat-input" placeholder="Pregúntale a tu entrenador IA...">
+                        <button id="btn-chat-send" class="btn-send"><i class="lucide-send"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pestaña: Dieta -->
+            <section id="tab-diet" class="tab-pane">
+                <div class="dashboard-grid">
+                    <!-- Preferencias Alimentarias -->
+                    <div class="glass-card diet-prefs-card">
+                        <div class="card-header">
+                            <h3>Tus Preferencias Alimentarias</h3>
+                            <i class="lucide-utensils icon-accent"></i>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="diet-type"><i class="lucide-leaf"></i> Tipo de Alimentación</label>
+                            <select id="diet-type">
+                                <option value="omnivoro">Omnívoro (como de todo)</option>
+                                <option value="vegetariano">Vegetariano</option>
+                                <option value="vegano">Vegano</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="lucide-shield-alert"></i> Alergias o Intolerancias</label>
+                            <div class="zone-selector" id="allergy-selector">
+                                <button type="button" class="zone-chip" data-allergy="gluten">Gluten</button>
+                                <button type="button" class="zone-chip" data-allergy="lactosa">Lactosa</button>
+                                <button type="button" class="zone-chip" data-allergy="frutos_secos">Frutos Secos</button>
+                                <button type="button" class="zone-chip" data-allergy="huevo">Huevo</button>
+                                <button type="button" class="zone-chip" data-allergy="mariscos">Mariscos</button>
+                                <button type="button" class="zone-chip" data-allergy="pescado">Pescado</button>
+                                <button type="button" class="zone-chip" data-allergy="soya">Soya</button>
+                                <button type="button" class="zone-chip zone-chip-none active" data-allergy="none">Ninguna</button>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="diet-goal"><i class="lucide-target"></i> Tu Meta</label>
+                                <select id="diet-goal">
+                                    <option value="bajar_peso">Bajar de Peso</option>
+                                    <option value="mantener" selected>Mantener Peso</option>
+                                    <option value="ganar_musculo">Ganar Músculo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="diet-meals"><i class="lucide-clock"></i> Comidas al Día</label>
+                                <select id="diet-meals">
+                                    <option value="3">3 comidas</option>
+                                    <option value="4" selected>4 comidas</option>
+                                    <option value="5">5 comidas</option>
+                                    <option value="6">6 comidas</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="lucide-wallet"></i> Presupuesto para Comida</label>
+                            <div class="resource-options" id="diet-budget-options">
+                                <button type="button" class="resource-card active" data-budget="bajo">
+                                    <i class="lucide-piggy-bank"></i>
+                                    <span class="resource-title">Bajo</span>
+                                    <span class="resource-desc">Alimentos accesibles y económicos</span>
+                                </button>
+                                <button type="button" class="resource-card" data-budget="medio">
+                                    <i class="lucide-shopping-cart"></i>
+                                    <span class="resource-title">Medio</span>
+                                    <span class="resource-desc">Algo más de variedad</span>
+                                </button>
+                                <button type="button" class="resource-card" data-budget="alto">
+                                    <i class="lucide-gem"></i>
+                                    <span class="resource-title">Alto</span>
+                                    <span class="resource-desc">Sin restricción de variedad</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button id="btn-generate-diet" class="btn btn-primary btn-block">
+                            <span>Actualizar mi Plan de Dieta</span>
+                            <i class="lucide-refresh-cw"></i>
+                        </button>
+                    </div>
+
+                    <!-- Resumen Calórico -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3>Tu Meta Calórica Diaria</h3>
+                            <i class="lucide-flame icon-accent"></i>
+                        </div>
+                        <div id="calorie-summary">
+                            <!-- Inyectado dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Alimentos Recomendados -->
+                    <div class="glass-card" style="grid-column: 1 / -1;">
+                        <div class="card-header">
+                            <h3>Alimentos Recomendados para Ti Hoy</h3>
+                            <i class="lucide-check-circle icon-accent"></i>
+                        </div>
+                        <div id="recommended-foods-grid" class="foods-grid">
+                            <!-- Inyectado dinámicamente -->
+                        </div>
+                        <p class="diet-disclaimer">Esta es una guía general de bienestar, no un plan clínico. Si tienes diabetes, hipertensión u otra condición, consulta a un nutricionista o médico antes de hacer cambios importantes en tu alimentación.</p>
+                    </div>
+
+                    <!-- Sugerencias de Comidas con IA -->
+                    <div class="glass-card" style="grid-column: 1 / -1;">
+                        <div class="card-header">
+                            <h3>Ideas de Comidas Generadas con IA</h3>
+                            <i class="lucide-sparkles icon-accent"></i>
+                        </div>
+                        <p class="community-desc">Convierte tu lista de alimentos recomendados en un menú real para tu día, usando Gemini.</p>
+                        <button id="btn-ai-diet-suggestions" class="btn btn-secondary" style="margin-top: 10px;">
+                            <i class="lucide-sparkles"></i>
+                            <span>Generar Ideas de Comidas</span>
+                        </button>
+                        <div id="ai-diet-result" class="ai-diet-result"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

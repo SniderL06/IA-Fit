@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "name": "iafit",
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/api/health",      "dest": "/api/health.js"      },
+    { "src": "/api/chat",        "dest": "/api/chat.js"        },
+    { "src": "/api/diet-advice", "dest": "/api/diet-advice.js" },
+    { "src": "/(.*)",            "dest": "/$1"                 }
+  ]
+}
