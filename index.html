@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <!-- Icons (Lucide Icons CSS) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.341.0/font/lucide.min.css">
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <!-- Pantalla de Bienvenida / Formulario Inicial -->
@@ -22,6 +24,13 @@
                 <h1>IA<span>Fit</span></h1>
             </div>
             <p class="subtitle">Inicia tu cambio físico hoy. Tu entrenamiento se adapta a ti, no tú al entrenamiento.</p>
+            
+            <!-- Botón / Login de Google -->
+            <div class="google-auth-card">
+                <div id="g_id_onload_onboarding"></div>
+                <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="dark" data-text="continue_with" data-size="large" data-logo_alignment="left"></div>
+                <div id="google-user-active-badge" class="google-user-active-badge" style="display:none;"></div>
+            </div>
             
             <form id="onboarding-form">
                 <!-- Indicador de Progreso del Wizard -->
@@ -240,6 +249,7 @@
                 <h2>IA<span>Fit</span></h2>
             </div>
             <div class="user-summary" id="header-user-summary">
+                <div id="google-profile-chip" class="google-profile-chip"></div>
                 <div class="badges-dynamic" id="badges-dynamic"></div>
                 <button id="btn-edit-profile" class="btn-icon" title="Editar Perfil"><i class="lucide-user-cog"></i></button>
             </div>
