@@ -2359,6 +2359,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnSubmit) {
         btnSubmit.addEventListener('click', handleWizardSubmit);
     }
+
+    // ---- LISTENER DEL BOTÓN "¡INICIAR ENTRENAMIENTO!" ----
+    const btnStartWorkout = document.getElementById('btn-start-workout');
+    if (btnStartWorkout) {
+        btnStartWorkout.addEventListener('click', () => {
+            initInteractiveWorkoutPlayer();
+        });
+    }
 });
 
 
@@ -3293,6 +3301,42 @@ function toggleUserAllowedExercise(exerciseId) {
     generateDashboardRoutine();
 }
 
+// Mapa de GIFs de Demostración Gratuitos y Libres de Derechos para Ejercicios
+const EXERCISE_GIFS_MAP = {
+    "caminata": "https://upload.wikimedia.org/wikipedia/commons/7/71/Walk_animation.gif",
+    "sentadillas-silla": "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.gif",
+    "flexiones-pared": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif",
+    "movilidad-articular": "https://upload.wikimedia.org/wikipedia/commons/7/71/Walk_animation.gif",
+    "flexiones-suelo": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif",
+    "mountain-climbers": "https://upload.wikimedia.org/wikipedia/commons/2/22/Mountain_climbers.gif",
+    "abdominales-crunch": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
+    "elevacion-piernas": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
+    "plancha-isometrica": "https://upload.wikimedia.org/wikipedia/commons/0/08/Plank_exercise_icon.svg",
+    "burpees": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Burpee.gif",
+    "sentadilla-sumo": "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.gif",
+    "zancadas": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Lunge.gif",
+    "glute-bridge": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
+    "superman": "https://upload.wikimedia.org/wikipedia/commons/0/08/Plank_exercise_icon.svg",
+    "bicycle-crunch": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
+    "saltar-cuerda": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Jogging_animation.gif",
+    "wall-sit": "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.gif",
+    "russian-twists": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
+    "bulgarian-split-squat": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Lunge.gif",
+    "plancha-lateral": "https://upload.wikimedia.org/wikipedia/commons/0/08/Plank_exercise_icon.svg",
+    "marcha-sitio": "https://upload.wikimedia.org/wikipedia/commons/7/71/Walk_animation.gif",
+    "eliptica": "https://upload.wikimedia.org/wikipedia/commons/7/71/Walk_animation.gif",
+    "cinta-trotar": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Jogging_animation.gif",
+    "remo-maquina": "https://upload.wikimedia.org/wikipedia/commons/7/71/Walk_animation.gif",
+    "press-pecho-mancuernas": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif",
+    "press-hombros-mancuernas": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif",
+    "peso-muerto-mancuernas": "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.gif",
+    "spinning-hiit": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Jogging_animation.gif",
+    "sentadilla-goblet": "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.gif",
+    "hip-thrust": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
+    "dominadas-asistidas": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif",
+    "triceps-copa": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif"
+};
+
 // --- BIBLIOTECA DE EJERCICIOS ---
 function renderExercises(exercises) {
     exerciseGrid.innerHTML = '';
@@ -3307,7 +3351,12 @@ function renderExercises(exercises) {
     }
 
     exercises.forEach(ex => {
+        if (!ex.gifUrl && EXERCISE_GIFS_MAP[ex.id]) {
+            ex.gifUrl = EXERCISE_GIFS_MAP[ex.id];
+        }
+
         const card = document.createElement('div');
+
         const evaluation = evaluateExerciseForUser(ex, state.user, cycleInfo);
         const isUserAllowed = (state.user.userAllowedExercises || []).includes(ex.id);
 
@@ -3328,7 +3377,9 @@ function renderExercises(exercises) {
         const allowBtnText = isUserAllowed ? '<i class="lucide-check-square"></i> Habilitado por ti' : '<i class="lucide-plus-circle"></i> Yo soporto este ejercicio';
         const allowBtnClass = isUserAllowed ? 'btn-allow-exercise active' : 'btn-allow-exercise';
 
-        const visualContent = ex.visualSvg ? ex.visualSvg : `<i class="${ex.icon}"></i>`;
+        const visualContent = ex.gifUrl 
+            ? `<img src="${ex.gifUrl}" alt="${ex.name}" class="exercise-gif" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" /><div class="gif-fallback" style="display:none;width:100%;height:100%;">${ex.visualSvg || `<i class="${ex.icon}"></i>`}</div>` 
+            : (ex.visualSvg ? ex.visualSvg : `<i class="${ex.icon}"></i>`);
 
         card.innerHTML = `
             <div class="exercise-img-ph">
@@ -3372,8 +3423,16 @@ const modalBenefits = document.getElementById('modal-benefits');
 const modalHealthTips = document.getElementById('modal-health-tips');
 
 function openExerciseModal(ex, evaluation) {
-    // SVG
-    modalSvgArea.innerHTML = ex.visualSvg || `<i class="${ex.icon}" style="font-size:4rem;color:var(--primary);"></i>`;
+    if (!ex.gifUrl && EXERCISE_GIFS_MAP[ex.id]) {
+        ex.gifUrl = EXERCISE_GIFS_MAP[ex.id];
+    }
+
+    // GIF / SVG / Icon
+    if (ex.gifUrl) {
+        modalSvgArea.innerHTML = `<img src="${ex.gifUrl}" alt="${ex.name}" class="modal-exercise-gif" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" /><div class="gif-fallback" style="display:none;width:100%;height:100%;">${ex.visualSvg || `<i class="${ex.icon}" style="font-size:4rem;color:var(--primary);"></i>`}</div>`;
+    } else {
+        modalSvgArea.innerHTML = ex.visualSvg || `<i class="${ex.icon}" style="font-size:4rem;color:var(--primary);"></i>`;
+    }
 
     // Título
     modalTitle.textContent = ex.name;
@@ -4070,3 +4129,359 @@ function showScreen(screenEl) {
         screenEl.classList.add('active');
     }, 50);
 }
+
+// ==========================================
+// MOTOR DEL WORKOUT PLAYER INTERACTIVO EN VIVO
+// ==========================================
+
+let workoutState = {
+    routine: [],
+    currentIndex: 0,
+    status: 'stopped', // 'active', 'paused', 'rest', 'complete'
+    timerInterval: null,
+    totalSecondsElapsed: 0,
+    currentStepSeconds: 30,
+    currentStepTotalDuration: 30,
+    restSeconds: 30,
+    soundEnabled: true
+};
+
+// Sintetizador Web Audio API para sonidos sin archivos externos
+function playWorkoutBeep(freq = 600, duration = 0.12, type = 'sine') {
+    if (!workoutState.soundEnabled) return;
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+    } catch (e) {
+        // Ignorar si el navegador bloquea audio sin interacción previa
+    }
+}
+
+function initInteractiveWorkoutPlayer(customExercisesList) {
+    // 1. Obtener la rutina de hoy o lista personalizada
+    if (customExercisesList && customExercisesList.length > 0) {
+        workoutState.routine = customExercisesList;
+    } else {
+        const cycleInfo = (state.user.cycleTracking && state.user.cycleTracking.enabled)
+            ? computeCyclePhase(state.user.cycleTracking.lastPeriodDate, state.user.cycleTracking.cycleLength)
+            : null;
+
+        const safeExercises = EXERCISES_DATABASE.filter(ex => {
+            const ev = evaluateExerciseForUser(ex, state.user, cycleInfo);
+            const isUserAllowed = (state.user.userAllowedExercises || []).includes(ex.id);
+            return ev.safe || isUserAllowed;
+        });
+
+        // Tomar 4 a 5 ejercicios adaptados
+        workoutState.routine = safeExercises.slice(0, 5);
+        if (workoutState.routine.length === 0) {
+            workoutState.routine = EXERCISES_DATABASE.slice(0, 4);
+        }
+    }
+
+    workoutState.currentIndex = 0;
+    workoutState.totalSecondsElapsed = 0;
+    workoutState.status = 'active';
+
+    const playerOverlay = document.getElementById('workout-player-overlay');
+    if (playerOverlay) {
+        playerOverlay.style.display = 'flex';
+    }
+
+    // Vincular controles del Player
+    bindWorkoutPlayerControls();
+
+    // Iniciar primer ejercicio
+    loadWorkoutExerciseStep(0);
+}
+
+function bindWorkoutPlayerControls() {
+    const btnExit = document.getElementById('btn-exit-workout');
+    const btnPlayPause = document.getElementById('btn-workout-play-pause');
+    const btnPrev = document.getElementById('btn-workout-prev');
+    const btnNext = document.getElementById('btn-workout-next');
+    const btnToggleSound = document.getElementById('btn-toggle-sound');
+    const btnSkipRest = document.getElementById('btn-skip-rest');
+    const btnAddRest = document.getElementById('btn-add-rest');
+    const btnFinishComplete = document.getElementById('btn-finish-workout-complete');
+
+    if (btnExit) btnExit.onclick = stopAndExitWorkoutPlayer;
+
+    if (btnPlayPause) {
+        btnPlayPause.onclick = () => {
+            if (workoutState.status === 'active') {
+                pauseWorkoutTimer();
+            } else if (workoutState.status === 'paused') {
+                resumeWorkoutTimer();
+            }
+        };
+    }
+
+    if (btnPrev) {
+        btnPrev.onclick = () => {
+            if (workoutState.currentIndex > 0) {
+                loadWorkoutExerciseStep(workoutState.currentIndex - 1);
+            }
+        };
+    }
+
+    if (btnNext) {
+        btnNext.onclick = () => {
+            finishCurrentExerciseStep();
+        };
+    }
+
+    if (btnToggleSound) {
+        btnToggleSound.onclick = () => {
+            workoutState.soundEnabled = !workoutState.soundEnabled;
+            const soundIcon = document.getElementById('sound-icon');
+            if (soundIcon) {
+                soundIcon.className = workoutState.soundEnabled ? 'lucide-volume-2' : 'lucide-volume-x';
+            }
+        };
+    }
+
+    if (btnSkipRest) {
+        btnSkipRest.onclick = () => {
+            clearInterval(workoutState.timerInterval);
+            loadWorkoutExerciseStep(workoutState.currentIndex + 1);
+        };
+    }
+
+    if (btnAddRest) {
+        btnAddRest.onclick = () => {
+            workoutState.restSeconds += 15;
+            updateRestTimerUI();
+        };
+    }
+
+    if (btnFinishComplete) {
+        btnFinishComplete.onclick = () => {
+            stopAndExitWorkoutPlayer();
+        };
+    }
+}
+
+function loadWorkoutExerciseStep(index) {
+    clearInterval(workoutState.timerInterval);
+
+    if (index >= workoutState.routine.length) {
+        showWorkoutCompleteScreen();
+        return;
+    }
+
+    workoutState.currentIndex = index;
+    workoutState.status = 'active';
+
+    const ex = workoutState.routine[index];
+    if (!ex.gifUrl && EXERCISE_GIFS_MAP[ex.id]) {
+        ex.gifUrl = EXERCISE_GIFS_MAP[ex.id];
+    }
+
+    // Actualizar vistas
+    document.getElementById('workout-active-view').style.display = 'flex';
+    document.getElementById('workout-rest-view').style.display = 'none';
+    document.getElementById('workout-complete-view').style.display = 'none';
+
+    // Header counter y progreso
+    const counterEl = document.getElementById('workout-step-counter');
+    const overallBar = document.getElementById('workout-overall-progress');
+    if (counterEl) counterEl.textContent = `Ejercicio ${index + 1} de ${workoutState.routine.length}`;
+    if (overallBar) {
+        const pct = Math.round(((index) / workoutState.routine.length) * 100);
+        overallBar.style.width = `${pct}%`;
+    }
+
+    // Media Frame (GIF / SVG)
+    const mediaFrame = document.getElementById('workout-media-frame');
+    if (mediaFrame) {
+        if (ex.gifUrl) {
+            mediaFrame.innerHTML = `<img src="${ex.gifUrl}" alt="${ex.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" /><div class="gif-fallback" style="display:none;width:100%;height:100%;">${ex.visualSvg || `<i class="${ex.icon}" style="font-size:4rem;color:var(--primary);"></i>`}</div>`;
+        } else {
+            mediaFrame.innerHTML = ex.visualSvg || `<i class="${ex.icon}" style="font-size:4rem;color:var(--primary);"></i>`;
+        }
+    }
+
+    // Info del ejercicio
+    const catTag = document.getElementById('workout-category-tag');
+    const titleEl = document.getElementById('workout-exercise-title');
+    const targetEl = document.getElementById('workout-exercise-target');
+    if (catTag) catTag.textContent = ex.category === 'fuerza' ? 'Fuerza' : ex.category === 'movilidad' ? 'Movilidad' : 'Cardio';
+    if (titleEl) titleEl.textContent = ex.name;
+    if (targetEl) targetEl.textContent = ex.time || '3 series';
+
+    // Calcular duración estimada en segundos
+    let durationSec = 30; // default 30 seg
+    if (ex.time && ex.time.includes('min')) {
+        const mins = parseInt(ex.time) || 1;
+        durationSec = Math.min(mins * 60, 60); // máximo 60 segs por intervalo interactivo
+    } else if (ex.time && ex.time.includes('reps')) {
+        durationSec = 45;
+    }
+
+    workoutState.currentStepSeconds = durationSec;
+    workoutState.currentStepTotalDuration = durationSec;
+
+    updateWorkoutTimerUI();
+    updatePlayPauseIcon('pause');
+
+    // Tono de inicio
+    playWorkoutBeep(800, 0.2);
+
+    // Iniciar temporizador
+    workoutState.timerInterval = setInterval(() => {
+        if (workoutState.status === 'active') {
+            workoutState.currentStepSeconds--;
+            workoutState.totalSecondsElapsed++;
+            updateWorkoutTimerUI();
+
+            // Sonidos de cuenta regresiva últimos 3 segs
+            if (workoutState.currentStepSeconds <= 3 && workoutState.currentStepSeconds > 0) {
+                playWorkoutBeep(500, 0.1);
+            }
+
+            if (workoutState.currentStepSeconds <= 0) {
+                finishCurrentExerciseStep();
+            }
+        }
+    }, 1000);
+}
+
+function finishCurrentExerciseStep() {
+    clearInterval(workoutState.timerInterval);
+    playWorkoutBeep(1000, 0.3); // Pitido de logro
+
+    // Si es el último ejercicio, ir a la pantalla de victoria directamente
+    if (workoutState.currentIndex >= workoutState.routine.length - 1) {
+        showWorkoutCompleteScreen();
+    } else {
+        startRestPhase();
+    }
+}
+
+function startRestPhase() {
+    workoutState.status = 'rest';
+    workoutState.restSeconds = 30;
+
+    const activeView = document.getElementById('workout-active-view');
+    const restView = document.getElementById('workout-rest-view');
+    const completeView = document.getElementById('workout-complete-view');
+
+    if (activeView) activeView.style.display = 'none';
+    if (completeView) completeView.style.display = 'none';
+    if (restView) restView.style.display = 'flex';
+
+    // Nombre del siguiente ejercicio
+    const nextEx = workoutState.routine[workoutState.currentIndex + 1];
+    const nextCard = document.getElementById('rest-next-exercise-name');
+    if (nextCard && nextEx) {
+        nextCard.textContent = `${nextEx.name} (${nextEx.time || ''})`;
+    }
+
+    updateRestTimerUI();
+
+    workoutState.timerInterval = setInterval(() => {
+        if (workoutState.status === 'rest') {
+            workoutState.restSeconds--;
+            updateRestTimerUI();
+
+            if (workoutState.restSeconds <= 3 && workoutState.restSeconds > 0) {
+                playWorkoutBeep(450, 0.1);
+            }
+
+            if (workoutState.restSeconds <= 0) {
+                clearInterval(workoutState.timerInterval);
+                loadWorkoutExerciseStep(workoutState.currentIndex + 1);
+            }
+        }
+    }, 1000);
+}
+
+function updateRestTimerUI() {
+    const restText = document.getElementById('rest-timer-text');
+    if (!restText) return;
+    const m = Math.floor(workoutState.restSeconds / 60);
+    const s = workoutState.restSeconds % 60;
+    restText.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+}
+
+function updateWorkoutTimerUI() {
+    const timerText = document.getElementById('workout-timer-text');
+    const circleProgress = document.getElementById('timer-circle-progress');
+    if (!timerText) return;
+
+    const m = Math.floor(workoutState.currentStepSeconds / 60);
+    const s = workoutState.currentStepSeconds % 60;
+    timerText.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+
+    if (circleProgress) {
+        const total = workoutState.currentStepTotalDuration || 30;
+        const pct = Math.max(0, workoutState.currentStepSeconds / total);
+        const dashoffset = 276 * (1 - pct);
+        circleProgress.style.strokeDashoffset = dashoffset;
+    }
+}
+
+function pauseWorkoutTimer() {
+    workoutState.status = 'paused';
+    updatePlayPauseIcon('play');
+}
+
+function resumeWorkoutTimer() {
+    workoutState.status = 'active';
+    updatePlayPauseIcon('pause');
+}
+
+function updatePlayPauseIcon(mode) {
+    const icon = document.getElementById('play-pause-icon');
+    if (icon) {
+        icon.className = mode === 'play' ? 'lucide-play' : 'lucide-pause';
+    }
+}
+
+function showWorkoutCompleteScreen() {
+    workoutState.status = 'complete';
+    clearInterval(workoutState.timerInterval);
+
+    // Sonido triunfal
+    playWorkoutBeep(800, 0.15);
+    setTimeout(() => playWorkoutBeep(1200, 0.4), 160);
+
+    document.getElementById('workout-active-view').style.display = 'none';
+    document.getElementById('workout-rest-view').style.display = 'none';
+    const completeView = document.getElementById('workout-complete-view');
+    if (completeView) completeView.style.display = 'flex';
+
+    // Barra de progreso llena
+    const overallBar = document.getElementById('workout-overall-progress');
+    if (overallBar) overallBar.style.width = '100%';
+
+    // Calcular estadísticas totales
+    const mins = Math.max(1, Math.round(workoutState.totalSecondsElapsed / 60));
+    const cals = Math.round(mins * 6.5); // Aprox 6.5 kcal por min de rutina moderada
+
+    document.getElementById('complete-total-time').textContent = `${mins} min`;
+    document.getElementById('complete-total-cals').textContent = `${cals} kcal`;
+    document.getElementById('complete-total-count').textContent = `${workoutState.routine.length}`;
+}
+
+function stopAndExitWorkoutPlayer() {
+    clearInterval(workoutState.timerInterval);
+    workoutState.status = 'stopped';
+    const playerOverlay = document.getElementById('workout-player-overlay');
+    if (playerOverlay) {
+        playerOverlay.style.display = 'none';
+    }
+}
+

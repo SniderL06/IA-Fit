@@ -1312,3 +1312,389 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
     color: var(--text-muted);
     margin: 0;
 }
+
+/* Estilos para GIFs de Ejercicios Libre Copy */
+.exercise-gif {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    transition: transform 0.3s ease;
+}
+
+.exercise-card:hover .exercise-gif {
+    transform: scale(1.04);
+}
+
+.modal-exercise-gif {
+    width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    background: #0d0f18;
+}
+
+/* ==========================================
+   WORKOUT PLAYER OVERLAY & MODO INTERACTIVO
+   ========================================== */
+.btn-start-workout-glow {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+    animation: pulseGlow 2s indefinite;
+}
+
+.btn-start-workout-glow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+}
+
+.workout-player-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 9, 15, 0.95);
+    backdrop-filter: blur(12px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    animation: fadeIn 0.3s ease;
+}
+
+.workout-player-container {
+    width: min(540px, 100%);
+    background: var(--surface-2);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    position: relative;
+    max-height: 94vh;
+    overflow-y: auto;
+}
+
+.workout-player-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.workout-close-btn, .workout-sound-btn {
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: var(--text-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.workout-close-btn:hover, .workout-sound-btn:hover {
+    background: rgba(255,255,255,0.18);
+}
+
+.workout-progress-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.workout-progress-info span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.workout-progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.workout-progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary) 0%, #10b981 100%);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.workout-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.workout-media-frame {
+    width: 100%;
+    height: 220px;
+    background: #090a0f;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.workout-media-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.workout-info-block {
+    text-align: center;
+}
+
+.workout-category-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary-light);
+    background: rgba(99, 102, 241, 0.15);
+    padding: 4px 12px;
+    border-radius: 50px;
+}
+
+.workout-exercise-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 8px 0 4px;
+}
+
+.workout-exercise-target {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Temporizador Circular */
+.workout-timer-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 4px 0;
+}
+
+.timer-circle {
+    width: 130px;
+    height: 130px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timer-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.timer-circle-bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.08);
+    stroke-width: 8;
+}
+
+.timer-circle-progress {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 8;
+    stroke-dasharray: 276;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s linear, stroke 0.3s ease;
+}
+
+.timer-text {
+    position: absolute;
+    font-size: 1.8rem;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-primary);
+}
+
+.workout-controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.workout-ctrl-btn {
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.workout-ctrl-btn.main {
+    width: 64px;
+    height: 64px;
+    background: var(--primary);
+    color: white;
+    font-size: 1.5rem;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.workout-ctrl-btn.main:hover {
+    transform: scale(1.06);
+    background: var(--primary-light);
+}
+
+.workout-ctrl-btn.sec {
+    width: 48px;
+    height: 48px;
+    background: rgba(255,255,255,0.08);
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+.workout-ctrl-btn.sec:hover {
+    background: rgba(255,255,255,0.18);
+}
+
+/* Vista de Descanso */
+.rest-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.rest-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin: 0;
+    text-align: center;
+}
+
+.rest-next-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.rest-next-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.rest-timer-box {
+    margin: 10px 0;
+}
+
+.rest-timer-num {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #f59e0b;
+    font-family: 'Outfit', sans-serif;
+}
+
+.rest-actions-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Vista de Completado */
+.complete-trophy-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    color: white;
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+    animation: bounce 1s ease;
+}
+
+.complete-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 0;
+    text-align: center;
+}
+
+.complete-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin: 0;
+}
+
+.complete-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.complete-stat-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.complete-stat-card i {
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+
+.complete-stat-val {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.complete-stat-lbl {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+

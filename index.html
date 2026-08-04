@@ -346,9 +346,18 @@
 
                     <!-- Plan Rápido Generado -->
                     <div class="glass-card plan-quick-card">
-                        <div class="card-header">
-                            <h3>Tu Rutina de Hoy</h3>
-                            <button id="btn-quick-adjust" class="btn btn-secondary btn-sm">Aligerar más</button>
+                        <div class="card-header" style="flex-wrap:wrap; gap:10px;">
+                            <div>
+                                <h3>Tu Rutina de Hoy</h3>
+                                <p style="font-size:0.8rem; color:var(--text-muted); margin:2px 0 0 0;">Ejercicios adaptados a tus metas y salud</p>
+                            </div>
+                            <div style="display:flex; gap:8px; align-items:center; margin-left:auto;">
+                                <button id="btn-quick-adjust" class="btn btn-secondary btn-sm">Aligerar más</button>
+                                <button id="btn-start-workout" class="btn btn-primary btn-sm btn-start-workout-glow">
+                                    <i class="lucide-play"></i>
+                                    <span>¡Iniciar Entrenamiento!</span>
+                                </button>
+                            </div>
                         </div>
                         <div class="quick-routine-list" id="quick-routine-list">
                             <!-- Inyectado dinámicamente -->
@@ -586,6 +595,117 @@
                     <i class="lucide-lock" style="width:13px;height:13px;"></i>
                     <span>Datos guardados solo en este dispositivo · No se envía ninguna información a servidores</span>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WORKOUT PLAYER OVERLAY (Modo Entrenamiento Interactivo en Vivo) -->
+    <div id="workout-player-overlay" class="workout-player-overlay" style="display:none;">
+        <div class="workout-player-container">
+            <!-- Header del Player -->
+            <div class="workout-player-header">
+                <button type="button" class="workout-close-btn" id="btn-exit-workout" title="Salir del entrenamiento">
+                    <i class="lucide-x"></i>
+                </button>
+                <div class="workout-progress-info">
+                    <span id="workout-step-counter">Ejercicio 1 de 4</span>
+                    <div class="workout-progress-bar-bg">
+                        <div class="workout-progress-bar-fill" id="workout-overall-progress" style="width: 25%;"></div>
+                    </div>
+                </div>
+                <button type="button" class="workout-sound-btn" id="btn-toggle-sound" title="Sonido activado/desactivado">
+                    <i class="lucide-volume-2" id="sound-icon"></i>
+                </button>
+            </div>
+
+            <!-- Zona Principal: Modo Ejercicio Activo -->
+            <div id="workout-active-view" class="workout-view active">
+                <div class="workout-media-frame" id="workout-media-frame">
+                    <!-- GIF/SVG inyectado dinámicamente -->
+                </div>
+
+                <div class="workout-info-block">
+                    <span class="workout-category-tag" id="workout-category-tag">Fuerza</span>
+                    <h2 class="workout-exercise-title" id="workout-exercise-title">Sentadillas</h2>
+                    <p class="workout-exercise-target" id="workout-exercise-target">3 series de 12 reps</p>
+                </div>
+
+                <!-- Reloj / Contador de tiempo o Repeticiones -->
+                <div class="workout-timer-display">
+                    <div class="timer-circle">
+                        <svg viewBox="0 0 100 100" class="timer-svg">
+                            <circle cx="50" cy="50" r="44" class="timer-circle-bg"></circle>
+                            <circle cx="50" cy="50" r="44" class="timer-circle-progress" id="timer-circle-progress"></circle>
+                        </svg>
+                        <div class="timer-text" id="workout-timer-text">00:30</div>
+                    </div>
+                </div>
+
+                <!-- Botones de Control del Player -->
+                <div class="workout-controls-row">
+                    <button type="button" class="workout-ctrl-btn sec" id="btn-workout-prev" title="Anterior">
+                        <i class="lucide-skip-back"></i>
+                    </button>
+                    <button type="button" class="workout-ctrl-btn main" id="btn-workout-play-pause">
+                        <i class="lucide-pause" id="play-pause-icon"></i>
+                    </button>
+                    <button type="button" class="workout-ctrl-btn sec" id="btn-workout-next" title="Siguiente / Completar">
+                        <i class="lucide-skip-forward"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Zona Secundaria: Modo Descanso Intermedio -->
+            <div id="workout-rest-view" class="workout-view" style="display:none;">
+                <div class="rest-badge"><i class="lucide-coffee"></i> Tiempo de Descanso</div>
+                <h3 class="rest-title">¡Gran trabajo! Tómate un respiro</h3>
+                <p class="rest-next-label">Siguiente ejercicio:</p>
+                <div class="rest-next-card" id="rest-next-exercise-name">Caminata Rápida</div>
+
+                <!-- Contador de descanso -->
+                <div class="rest-timer-box">
+                    <span class="rest-timer-num" id="rest-timer-text">00:30</span>
+                </div>
+
+                <div class="rest-actions-row">
+                    <button type="button" class="btn btn-secondary btn-sm" id="btn-add-rest">+15 seg</button>
+                    <button type="button" class="btn btn-primary" id="btn-skip-rest">
+                        <span>Iniciar Siguiente Ejercicio</span>
+                        <i class="lucide-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Zona Tercera: Resumen de Entrenamiento Completado -->
+            <div id="workout-complete-view" class="workout-view" style="display:none;">
+                <div class="complete-trophy-icon">
+                    <i class="lucide-trophy"></i>
+                </div>
+                <h2 class="complete-title">¡Entrenamiento Completado! 🎉</h2>
+                <p class="complete-subtitle">Has demostrado gran disciplina hoy. Tu cuerpo y salud te lo agradecen.</p>
+
+                <div class="complete-stats-grid">
+                    <div class="complete-stat-card">
+                        <i class="lucide-clock"></i>
+                        <span class="complete-stat-val" id="complete-total-time">12 min</span>
+                        <span class="complete-stat-lbl">Tiempo Total</span>
+                    </div>
+                    <div class="complete-stat-card">
+                        <i class="lucide-flame"></i>
+                        <span class="complete-stat-val" id="complete-total-cals">85 kcal</span>
+                        <span class="complete-stat-lbl">Calorías Est.</span>
+                    </div>
+                    <div class="complete-stat-card">
+                        <i class="lucide-check-circle"></i>
+                        <span class="complete-stat-val" id="complete-total-count">4</span>
+                        <span class="complete-stat-lbl">Ejercicios</span>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary btn-block" id="btn-finish-workout-complete" style="margin-top:20px;">
+                    <i class="lucide-sparkles"></i>
+                    <span>Guardar y Volver al Inicio</span>
+                </button>
             </div>
         </div>
     </div>
