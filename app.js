@@ -2410,54 +2410,77 @@ cycleTrackingCheckbox.addEventListener('change', () => {
     cycleDetailGrid.style.display = cycleTrackingCheckbox.checked ? 'grid' : 'none';
 });
 
-// Evento Onboarding Form (envío final, paso 4)
-onboardingForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+// Función global para el botón "Generar mi Plan con IA" (type=button, sin submit nativo)
+window.handleWizardSubmit = function() {
+    // Validar todos los campos requeridos del paso 1 explícitamente
+    const w = parseFloat(document.getElementById('weight').value);
+    const h = parseFloat(document.getElementById('height').value);
+    const a = parseInt(document.getElementById('age').value);
+    const s = document.getElementById('sex-select').value;
 
-    state.user.weight = parseFloat(weightInput.value);
-    state.user.height = parseFloat(heightInput.value);
-    state.user.age = parseInt(ageInput.value);
-    state.user.sex = sexSelect.value;
+    if (!w || w < 30 || w > 250) {
+        goToStep(1);
+        setTimeout(() => { document.getElementById('weight').focus(); document.getElementById('weight').reportValidity(); }, 100);
+        return;
+    }
+    if (!h || h < 100 || h > 250) {
+        goToStep(1);
+        setTimeout(() => { document.getElementById('height').focus(); document.getElementById('height').reportValidity(); }, 100);
+        return;
+    }
+    if (!a || a < 12 || a > 100) {
+        goToStep(1);
+        setTimeout(() => { document.getElementById('age').focus(); document.getElementById('age').reportValidity(); }, 100);
+        return;
+    }
+    if (!s) {
+        goToStep(1);
+        setTimeout(() => { document.getElementById('sex-select').focus(); document.getElementById('sex-select').reportValidity(); }, 100);
+        return;
+    }
+
+    state.user.weight = w;
+    state.user.height = h;
+    state.user.age = a;
+    state.user.sex = s;
     state.user.activity = activitySelect.value;
 
     state.user.isDiabetic = diabeticCheckbox.checked;
     state.user.cardioCondition = cardioConditionSelect.value;
     state.user.respiratoryCondition = respiratoryConditionSelect.value;
 
-    // Zonas de lesión seleccionadas (excluyendo "ninguna")
     state.user.injuryZones = Array.from(zoneChips)
         .filter(c => c.classList.contains('active') && c.getAttribute('data-zone') !== 'none')
         .map(c => c.getAttribute('data-zone'));
 
-    // Ciclo menstrual (solo aplica si es mujer y activó el seguimiento)
     state.user.cycleTracking = {
-        enabled: sexSelect.value === 'female' && cycleTrackingCheckbox.checked,
+        enabled: s === 'female' && cycleTrackingCheckbox.checked,
         lastPeriodDate: lastPeriodDateInput.value || '',
         cycleLength: parseInt(cycleLengthInput.value) || 28
     };
 
-    // Recursos disponibles (nivel general)
     const activeResourceCard = document.querySelector('#resource-options .resource-card.active');
     state.user.resources = activeResourceCard ? activeResourceCard.getAttribute('data-resource') : 'none';
 
-    // Equipamiento específico en casa (voluntario)
     state.user.ownedEquipment = Array.from(document.querySelectorAll('.equip-chip.active'))
         .map(c => c.getAttribute('data-equipment'));
 
-    // Intensidad
     state.user.intensity = intensitySelect.value;
-
-    // Campos derivados (se mantienen por compatibilidad con las tarjetas de ejercicios)
     state.user.isHypertensive = state.user.cardioCondition === 'hypertension';
     state.user.hasJointPain = state.user.injuryZones.length > 0;
 
     calculateIMC();
     saveUserProfile();
-
     updateUIWithUserData();
     showScreen(mainApp);
     generateDashboardRoutine();
     initChat();
+};
+
+// Mantener el listener del form como fallback (por si alguien presiona Enter)
+onboardingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    handleWizardSubmit();
 });
 
 // Editar perfil
@@ -3772,29 +3795,32 @@ function updateGoogleUserUI() {
     const activeBadge = document.getElementById('google-user-active-badge');
     const headerChip = document.getElementById('google-profile-chip');
     const loginBtn = document.getElementById('btn-google-login-header');
+    const loginArea = document.getElementById('google-login-area');
 
     if (currentGoogleUser) {
-        // Usuario logueado: mostrar chip, ocultar botón de login
+        // Usuario logueado: mostrar chip en header, ocultar botón de login
         if (loginBtn) loginBtn.style.display = 'none';
+        if (loginArea) loginArea.style.display = 'none';
         if (activeBadge) {
             activeBadge.style.display = 'flex';
             activeBadge.innerHTML = `
-                <img src="${currentGoogleUser.picture}" class="google-user-avatar" alt="Avatar">
-                <span>Conectado como <strong>${currentGoogleUser.name}</strong></span>
+                <img src="${currentGoogleUser.picture || ''}" class="google-user-avatar" alt="Avatar" onerror="this.style.display='none'">
+                <span><strong>${currentGoogleUser.name}</strong></span>
                 <button onclick="logoutGoogleUser()" class="google-logout-btn" title="Cerrar Sesión"><i class="lucide-log-out"></i></button>
             `;
         }
         if (headerChip) {
             headerChip.style.display = 'flex';
             headerChip.innerHTML = `
-                <img src="${currentGoogleUser.picture}" alt="Avatar">
+                <img src="${currentGoogleUser.picture || ''}" alt="${currentGoogleUser.given_name || currentGoogleUser.name}" onerror="this.style.background='var(--primary)'; this.alt='${(currentGoogleUser.given_name || currentGoogleUser.name).charAt(0)}'">
                 <span>${currentGoogleUser.given_name || currentGoogleUser.name}</span>
                 <button onclick="logoutGoogleUser()" class="google-logout-btn" title="Cerrar Sesión"><i class="lucide-log-out"></i></button>
             `;
         }
     } else {
-        // Sin sesión: mostrar botón de login, ocultar chip
+        // Sin sesión: mostrar botón de login en header, mostrar área de login en onboarding
         if (loginBtn) loginBtn.style.display = 'flex';
+        if (loginArea) loginArea.style.display = 'flex';
         if (activeBadge) {
             activeBadge.style.display = 'none';
             activeBadge.innerHTML = '';
@@ -3870,22 +3896,68 @@ function initGoogleAuth() {
     }
 }
 
-// Función para disparar el login de Google desde el botón del header
-window.triggerGoogleLogin = function() {
-    if (window.google && google.accounts && google.accounts.id) {
-        google.accounts.id.prompt();
-    } else {
-        // Si el SDK no cargó, redirige al onboarding donde está el botón oficial
-        const onboardingScreen = document.getElementById('onboarding-screen');
-        const mainApp = document.getElementById('main-app');
-        if (onboardingScreen && mainApp) {
-            mainApp.style.display = 'none';
-            mainApp.classList.remove('active');
-            onboardingScreen.style.display = 'flex';
-            onboardingScreen.classList.add('active');
-        }
+// ==========================================
+// MODAL DE LOGIN PROPIO (funciona sin SDK de Google)
+// ==========================================
+window.showGoogleLoginModal = function() {
+    const modal = document.getElementById('google-login-modal');
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('visible'), 10);
+        const nameInput = document.getElementById('mock-google-name');
+        if (nameInput) nameInput.focus();
     }
 };
+
+window.closeGoogleLoginModal = function() {
+    const modal = document.getElementById('google-login-modal');
+    if (modal) {
+        modal.classList.remove('visible');
+        setTimeout(() => { modal.style.display = 'none'; }, 200);
+    }
+};
+
+window.confirmMockGoogleLogin = function() {
+    const nameInput = document.getElementById('mock-google-name');
+    const emailInput = document.getElementById('mock-google-email');
+    const name = (nameInput ? nameInput.value.trim() : '') || 'Usuario IAFit';
+    const email = (emailInput ? emailInput.value.trim() : '') || `user_${Date.now()}@iafit.local`;
+
+    // Generar un avatar con la inicial del nombre
+    const initial = name.charAt(0).toUpperCase();
+    const colors = ['#6366f1','#10b981','#f59e0b','#ec4899','#3b82f6'];
+    const color = colors[name.charCodeAt(0) % colors.length];
+    const avatarSvg = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><rect width='40' height='40' rx='20' fill='${encodeURIComponent(color)}'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' font-family='Outfit,sans-serif' font-size='18' font-weight='700' fill='white'>${initial}</text></svg>`;
+
+    currentGoogleUser = {
+        email: email,
+        name: name,
+        given_name: name.split(' ')[0],
+        picture: avatarSvg
+    };
+    localStorage.setItem('iafit_google_user', JSON.stringify(currentGoogleUser));
+
+    closeGoogleLoginModal();
+    loadUserProfile();
+    updateGoogleUserUI();
+
+    // Mostrar confirmación visual
+    const badge = document.getElementById('google-user-active-badge');
+    if (badge) badge.style.animation = 'none';
+};
+
+// Función para disparar el login desde el botón del header
+window.triggerGoogleLogin = function() {
+    showGoogleLoginModal();
+};
+
+// Cerrar modal al hacer click fuera
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('google-login-modal');
+    if (modal && modal.style.display !== 'none' && e.target === modal) {
+        closeGoogleLoginModal();
+    }
+});
 
 // Inicializar Google Auth cuando la ventana termine de cargar
 window.addEventListener('load', () => {
