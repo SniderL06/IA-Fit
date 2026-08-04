@@ -3771,8 +3771,11 @@ function parseJwt(token) {
 function updateGoogleUserUI() {
     const activeBadge = document.getElementById('google-user-active-badge');
     const headerChip = document.getElementById('google-profile-chip');
+    const loginBtn = document.getElementById('btn-google-login-header');
 
     if (currentGoogleUser) {
+        // Usuario logueado: mostrar chip, ocultar botón de login
+        if (loginBtn) loginBtn.style.display = 'none';
         if (activeBadge) {
             activeBadge.style.display = 'flex';
             activeBadge.innerHTML = `
@@ -3790,6 +3793,8 @@ function updateGoogleUserUI() {
             `;
         }
     } else {
+        // Sin sesión: mostrar botón de login, ocultar chip
+        if (loginBtn) loginBtn.style.display = 'flex';
         if (activeBadge) {
             activeBadge.style.display = 'none';
             activeBadge.innerHTML = '';
@@ -3864,6 +3869,23 @@ function initGoogleAuth() {
         }
     }
 }
+
+// Función para disparar el login de Google desde el botón del header
+window.triggerGoogleLogin = function() {
+    if (window.google && google.accounts && google.accounts.id) {
+        google.accounts.id.prompt();
+    } else {
+        // Si el SDK no cargó, redirige al onboarding donde está el botón oficial
+        const onboardingScreen = document.getElementById('onboarding-screen');
+        const mainApp = document.getElementById('main-app');
+        if (onboardingScreen && mainApp) {
+            mainApp.style.display = 'none';
+            mainApp.classList.remove('active');
+            onboardingScreen.style.display = 'flex';
+            onboardingScreen.classList.add('active');
+        }
+    }
+};
 
 // Inicializar Google Auth cuando la ventana termine de cargar
 window.addEventListener('load', () => {
