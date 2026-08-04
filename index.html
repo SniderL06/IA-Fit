@@ -630,8 +630,9 @@
                     <p class="workout-exercise-target" id="workout-exercise-target">3 series de 12 reps</p>
                 </div>
 
-                <!-- Reloj / Contador de tiempo o Repeticiones -->
-                <div class="workout-timer-display">
+                <!-- Reloj / Contador de tiempo (ejercicios por series/repeticiones o con segundos fijos) -->
+                <div class="workout-timer-display" id="workout-timer-display">
+                    <span class="timer-label" id="workout-timer-label">Tiempo restante</span>
                     <div class="timer-circle">
                         <svg viewBox="0 0 100 100" class="timer-svg">
                             <circle cx="50" cy="50" r="44" class="timer-circle-bg"></circle>
@@ -639,6 +640,15 @@
                         </svg>
                         <div class="timer-text" id="workout-timer-text">00:30</div>
                     </div>
+                </div>
+
+                <!-- Modo actividad libre (caminata, cinta, elíptica, etc: sin timer forzado) -->
+                <div class="workout-duration-free" id="workout-duration-free" style="display:none;">
+                    <div class="duration-stopwatch">
+                        <i class="lucide-timer"></i>
+                        <span id="workout-duration-elapsed">00:00</span>
+                    </div>
+                    <p class="duration-free-hint">Actividad libre, sin límite de tiempo. Muévete a tu ritmo y marca "Completado" cuando termines.</p>
                 </div>
 
                 <!-- Botones de Control del Player -->
@@ -653,6 +663,12 @@
                         <i class="lucide-skip-forward"></i>
                     </button>
                 </div>
+
+                <!-- CTA explícito para ejercicios de duración libre -->
+                <button type="button" class="btn btn-primary btn-block workout-duration-finish-btn" id="btn-finish-duration-exercise" style="display:none;">
+                    <i class="lucide-check-circle"></i>
+                    <span>Marcar como Completado</span>
+                </button>
             </div>
 
             <!-- Zona Secundaria: Modo Descanso Intermedio -->

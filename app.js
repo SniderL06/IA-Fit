@@ -4143,8 +4143,18 @@ let workoutState = {
     currentStepSeconds: 30,
     currentStepTotalDuration: 30,
     restSeconds: 30,
-    soundEnabled: true
+    soundEnabled: true,
+    isDurationMode: false // true = actividad de duración libre (caminata, cinta, etc.), sin timer forzado
 };
+
+// Determina si un ejercicio es de "duración libre" (caminata, cinta, elíptica, natación...)
+// vs. un ejercicio de series/repeticiones (que sí necesita timer, incluso si se mide en segundos por serie).
+function isDurationBasedExercise(ex) {
+    if (!ex || !ex.time) return false;
+    const t = ex.time.toLowerCase();
+    if (t.includes('serie')) return false; // "3 series de..." siempre usa timer por serie
+    return /min/.test(t); // p.ej. "15-30 min", "5-10 min"
+}
 
 // Sintetizador Web Audio API para sonidos sin archivos externos
 function playWorkoutBeep(freq = 600, duration = 0.12, type = 'sine') {
@@ -4271,6 +4281,13 @@ function bindWorkoutPlayerControls() {
             stopAndExitWorkoutPlayer();
         };
     }
+
+    const btnFinishDuration = document.getElementById('btn-finish-duration-exercise');
+    if (btnFinishDuration) {
+        btnFinishDuration.onclick = () => {
+            finishCurrentExerciseStep();
+        };
+    }
 }
 
 function loadWorkoutExerciseStep(index) {
@@ -4321,41 +4338,84 @@ function loadWorkoutExerciseStep(index) {
     if (titleEl) titleEl.textContent = ex.name;
     if (targetEl) targetEl.textContent = ex.time || '3 series';
 
-    // Calcular duración estimada en segundos
-    let durationSec = 30; // default 30 seg
-    if (ex.time && ex.time.includes('min')) {
-        const mins = parseInt(ex.time) || 1;
-        durationSec = Math.min(mins * 60, 60); // máximo 60 segs por intervalo interactivo
-    } else if (ex.time && ex.time.includes('reps')) {
-        durationSec = 45;
-    }
+    // Determinar el modo: duración libre (caminata, cinta, elíptica...) vs. series/reps con timer
+    const durationMode = isDurationBasedExercise(ex);
+    workoutState.isDurationMode = durationMode;
 
-    workoutState.currentStepSeconds = durationSec;
-    workoutState.currentStepTotalDuration = durationSec;
+    const timerDisplayEl = document.getElementById('workout-timer-display');
+    const durationFreeEl = document.getElementById('workout-duration-free');
+    const finishDurationBtn = document.getElementById('btn-finish-duration-exercise');
+    const nextBtnEl = document.getElementById('btn-workout-next');
 
-    updateWorkoutTimerUI();
-    updatePlayPauseIcon('pause');
+    if (durationMode) {
+        // Modo actividad libre: sin cuenta regresiva forzada, solo un cronómetro informativo
+        if (timerDisplayEl) timerDisplayEl.style.display = 'none';
+        if (durationFreeEl) durationFreeEl.style.display = 'flex';
+        if (finishDurationBtn) finishDurationBtn.style.display = 'flex';
+        if (nextBtnEl) nextBtnEl.title = 'Saltar al siguiente ejercicio';
 
-    // Tono de inicio
-    playWorkoutBeep(800, 0.2);
+        workoutState.currentStepSeconds = 0;
+        workoutState.currentStepTotalDuration = 0;
+        updateWorkoutTimerUI();
+        updatePlayPauseIcon('pause');
 
-    // Iniciar temporizador
-    workoutState.timerInterval = setInterval(() => {
-        if (workoutState.status === 'active') {
-            workoutState.currentStepSeconds--;
-            workoutState.totalSecondsElapsed++;
-            updateWorkoutTimerUI();
+        playWorkoutBeep(800, 0.2);
 
-            // Sonidos de cuenta regresiva últimos 3 segs
-            if (workoutState.currentStepSeconds <= 3 && workoutState.currentStepSeconds > 0) {
-                playWorkoutBeep(500, 0.1);
+        // Cronómetro que cuenta hacia adelante, sin límite ni avance automático
+        workoutState.timerInterval = setInterval(() => {
+            if (workoutState.status === 'active') {
+                workoutState.currentStepSeconds++;
+                workoutState.totalSecondsElapsed++;
+                updateWorkoutTimerUI();
             }
+        }, 1000);
+    } else {
+        // Modo series/repeticiones: mantiene la cuenta regresiva por serie
+        if (timerDisplayEl) timerDisplayEl.style.display = 'flex';
+        if (durationFreeEl) durationFreeEl.style.display = 'none';
+        if (finishDurationBtn) finishDurationBtn.style.display = 'none';
+        if (nextBtnEl) nextBtnEl.title = 'Siguiente / Completar';
 
-            if (workoutState.currentStepSeconds <= 0) {
-                finishCurrentExerciseStep();
+        let durationSec = 30; // default 30 seg
+        if (ex.time) {
+            const secMatch = ex.time.match(/(\d+)(?:-(\d+))?\s*seg/);
+            const minMatch = ex.time.match(/(\d+)(?:-(\d+))?\s*min/);
+            if (secMatch) {
+                durationSec = parseInt(secMatch[2] || secMatch[1], 10);
+            } else if (minMatch) {
+                durationSec = parseInt(minMatch[2] || minMatch[1], 10) * 60;
+            } else if (ex.time.includes('reps')) {
+                durationSec = 45;
             }
         }
-    }, 1000);
+
+        workoutState.currentStepSeconds = durationSec;
+        workoutState.currentStepTotalDuration = durationSec;
+
+        updateWorkoutTimerUI();
+        updatePlayPauseIcon('pause');
+
+        // Tono de inicio
+        playWorkoutBeep(800, 0.2);
+
+        // Iniciar temporizador regresivo
+        workoutState.timerInterval = setInterval(() => {
+            if (workoutState.status === 'active') {
+                workoutState.currentStepSeconds--;
+                workoutState.totalSecondsElapsed++;
+                updateWorkoutTimerUI();
+
+                // Sonidos de cuenta regresiva últimos 3 segs
+                if (workoutState.currentStepSeconds <= 3 && workoutState.currentStepSeconds > 0) {
+                    playWorkoutBeep(500, 0.1);
+                }
+
+                if (workoutState.currentStepSeconds <= 0) {
+                    finishCurrentExerciseStep();
+                }
+            }
+        }, 1000);
+    }
 }
 
 function finishCurrentExerciseStep() {
@@ -4417,19 +4477,31 @@ function updateRestTimerUI() {
 }
 
 function updateWorkoutTimerUI() {
+    const m = Math.floor(workoutState.currentStepSeconds / 60);
+    const s = workoutState.currentStepSeconds % 60;
+    const formatted = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+
+    if (workoutState.isDurationMode) {
+        // Modo cronómetro: cuenta hacia adelante, sin anillo de progreso con meta
+        const elapsedEl = document.getElementById('workout-duration-elapsed');
+        if (elapsedEl) elapsedEl.textContent = formatted;
+        return;
+    }
+
     const timerText = document.getElementById('workout-timer-text');
+    const timerLabel = document.getElementById('workout-timer-label');
     const circleProgress = document.getElementById('timer-circle-progress');
     if (!timerText) return;
 
-    const m = Math.floor(workoutState.currentStepSeconds / 60);
-    const s = workoutState.currentStepSeconds % 60;
-    timerText.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+    timerText.textContent = formatted;
+    if (timerLabel) timerLabel.textContent = 'Tiempo restante';
 
     if (circleProgress) {
         const total = workoutState.currentStepTotalDuration || 30;
         const pct = Math.max(0, workoutState.currentStepSeconds / total);
         const dashoffset = 276 * (1 - pct);
         circleProgress.style.strokeDashoffset = dashoffset;
+        circleProgress.classList.toggle('low-time', workoutState.currentStepSeconds <= 3 && workoutState.currentStepSeconds > 0);
     }
 }
 
