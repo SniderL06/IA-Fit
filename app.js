@@ -2200,6 +2200,9 @@ const state = {
     currentTab: 'tab-dashboard'
 };
 
+// Usuario de Google autenticado (debe estar antes de DOMContentLoaded)
+let currentGoogleUser = JSON.parse(localStorage.getItem('iafit_google_user') || 'null');
+
 // Elementos del DOM
 const onboardingScreen = document.getElementById('onboarding-screen');
 const mainApp = document.getElementById('main-app');
@@ -2294,7 +2297,70 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     renderExercises(EXERCISES_DATABASE);
+
+    // ---- LISTENERS DEL MODAL DE LOGIN ----
+    const modal = document.getElementById('google-login-modal');
+    const btnOpenOnboarding = document.getElementById('btn-google-signin-onboarding');
+    const btnOpenHeader = document.getElementById('btn-google-login-header');
+    const btnClose = document.getElementById('btn-close-login-modal');
+    const btnConfirm = document.getElementById('btn-confirm-login');
+
+    function openLoginModal() {
+        if (!modal) return;
+        modal.style.display = 'flex';
+        requestAnimationFrame(() => modal.classList.add('visible'));
+        const nameInput = document.getElementById('mock-google-name');
+        if (nameInput) setTimeout(() => nameInput.focus(), 150);
+    }
+
+    function closeLoginModal() {
+        if (!modal) return;
+        modal.classList.remove('visible');
+        setTimeout(() => { modal.style.display = 'none'; }, 220);
+    }
+
+    function confirmLogin() {
+        const nameInput = document.getElementById('mock-google-name');
+        const emailInput = document.getElementById('mock-google-email');
+        const name = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : 'Usuario IAFit';
+        const email = (emailInput && emailInput.value.trim()) ? emailInput.value.trim() : ('user_' + Date.now() + '@iafit.local');
+
+        const initial = name.charAt(0).toUpperCase();
+        const colors = ['#6366f1','#10b981','#f59e0b','#ec4899','#3b82f6'];
+        const color = colors[name.charCodeAt(0) % colors.length];
+        const avatarSvg = "data:image/svg+xml," + encodeURIComponent(
+            "<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'>" +
+            "<rect width='40' height='40' rx='20' fill='" + color + "'/>" +
+            "<text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' font-family='Outfit,sans-serif' font-size='18' font-weight='700' fill='white'>" + initial + "</text>" +
+            "</svg>"
+        );
+
+        currentGoogleUser = { email, name, given_name: name.split(' ')[0], picture: avatarSvg };
+        localStorage.setItem('iafit_google_user', JSON.stringify(currentGoogleUser));
+        closeLoginModal();
+        loadUserProfile();
+        updateGoogleUserUI();
+    }
+
+    if (btnOpenOnboarding) btnOpenOnboarding.addEventListener('click', openLoginModal);
+    if (btnOpenHeader) btnOpenHeader.addEventListener('click', openLoginModal);
+    if (btnClose) btnClose.addEventListener('click', closeLoginModal);
+    if (btnConfirm) btnConfirm.addEventListener('click', confirmLogin);
+    if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) closeLoginModal(); });
+
+    // Actualizar también las funciones globales para que apunten a las locales
+    window.showGoogleLoginModal = openLoginModal;
+    window.closeGoogleLoginModal = closeLoginModal;
+    window.confirmMockGoogleLogin = confirmLogin;
+    window.triggerGoogleLogin = openLoginModal;
+
+    // ---- LISTENER DEL BOTÓN "GENERAR MI PLAN CON IA" ----
+    const btnSubmit = document.getElementById('btn-wizard-submit');
+    if (btnSubmit) {
+        btnSubmit.addEventListener('click', handleWizardSubmit);
+    }
 });
+
 
 // ==========================================
 // WIZARD DE ONBOARDING
@@ -3719,23 +3785,24 @@ async function generateBotResponse(userMsg) {
     }
 }
 
-// Eventos de envío de chat
-btnChatSend.addEventListener('click', async () => {
-    const text = chatInput.value.trim();
-    if (!text) return;
+// Eventos de envío de chat (con guards para evitar null)
+if (btnChatSend) {
+    btnChatSend.addEventListener('click', async () => {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        appendMessage('user', text);
+        chatInput.value = '';
+        await generateBotResponse(text);
+    });
+}
 
-    appendMessage('user', text);
-    chatInput.value = '';
-    await generateBotResponse(text);
-});
+if (chatInput) {
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') btnChatSend && btnChatSend.click();
+    });
+}
 
-chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        btnChatSend.click();
-    }
-});
-
-btnChatReset.addEventListener('click', initChat);
+if (btnChatReset) btnChatReset.addEventListener('click', initChat);
 
 // Botones rápidos del chat
 quickChatBtns.forEach(btn => {
@@ -3749,8 +3816,7 @@ quickChatBtns.forEach(btn => {
 // ==========================================
 // GOOGLE AUTHENTICATION & MULTI-USER STORAGE
 // ==========================================
-
-let currentGoogleUser = JSON.parse(localStorage.getItem('iafit_google_user') || 'null');
+// (currentGoogleUser se declara al inicio del archivo, cerca del state global)
 
 function getUserStorageKey() {
     if (currentGoogleUser && currentGoogleUser.email) {
