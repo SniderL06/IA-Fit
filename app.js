@@ -3588,23 +3588,25 @@ async function fetchGeminiDietSuggestions() {
     return data.suggestion;
 }
 
-btnAiDietSuggestions.addEventListener('click', async () => {
-    aiDietResult.classList.add('loading');
-    aiDietResult.textContent = 'Generando ideas de comidas con IA...';
-    btnAiDietSuggestions.disabled = true;
+if (btnAiDietSuggestions) {
+    btnAiDietSuggestions.addEventListener('click', async () => {
+        aiDietResult.classList.add('loading');
+        aiDietResult.textContent = 'Generando ideas de comidas con IA...';
+        btnAiDietSuggestions.disabled = true;
 
-    try {
-        const suggestion = await fetchGeminiDietSuggestions();
-        aiDietResult.classList.remove('loading');
-        aiDietResult.textContent = suggestion;
-    } catch (err) {
-        console.warn('[IAFit] No se pudo generar sugerencia de dieta con IA:', err.message);
-        aiDietResult.classList.remove('loading');
-        aiDietResult.textContent = 'No pudimos conectar con el asistente de IA en este momento. Mientras tanto, guíate con la lista de "Alimentos Recomendados para Ti Hoy" de arriba, distribuyéndolos entre tus comidas del día.';
-    } finally {
-        btnAiDietSuggestions.disabled = false;
-    }
-});
+        try {
+            const suggestion = await fetchGeminiDietSuggestions();
+            aiDietResult.classList.remove('loading');
+            aiDietResult.textContent = suggestion;
+        } catch (err) {
+            console.warn('[IAFit] No se pudo generar sugerencia de dieta con IA:', err.message);
+            aiDietResult.classList.remove('loading');
+            aiDietResult.textContent = 'No pudimos conectar con el asistente de IA en este momento. Mientras tanto, guíate con la lista de "Alimentos Recomendados para Ti Hoy" de arriba, distribuyéndolos entre tus comidas del día.';
+        } finally {
+            btnAiDietSuggestions.disabled = false;
+        }
+    });
+}
 
 
 function showTypingIndicator() {
@@ -3938,6 +3940,32 @@ window.logoutGoogleUser = function() {
     } else {
         showScreen(onboardingScreen);
     }
+};
+
+// Actualiza el avatar del modal en tiempo real mientras el usuario escribe su nombre
+window.updateModalAvatar = function(name) {
+    const avatar = document.getElementById('modal-avatar-preview');
+    if (!avatar) return;
+    const trimmed = name.trim();
+    if (trimmed.length === 0) {
+        avatar.innerHTML = '<i class="lucide-user"></i>';
+        avatar.style.background = 'linear-gradient(135deg, var(--primary) 0%, #818cf8 100%)';
+        return;
+    }
+    const initial = trimmed.charAt(0).toUpperCase();
+    const colors = [
+        'linear-gradient(135deg, #6366f1 0%, #818cf8 100%)',
+        'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
+        'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)',
+        'linear-gradient(135deg, #ec4899 0%, #f472b6 100%)',
+        'linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)',
+        'linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%)'
+    ];
+    const color = colors[trimmed.charCodeAt(0) % colors.length];
+    avatar.style.background = color;
+    avatar.style.transform = 'scale(1.05)';
+    avatar.textContent = initial;
+    setTimeout(() => { if (avatar) avatar.style.transform = 'scale(1)'; }, 150);
 };
 
 function initGoogleAuth() {
