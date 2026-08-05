@@ -2096,39 +2096,59 @@ const EXERCISES_DATABASE = [
 const FOODS_DATABASE = [
     // --- Proteínas ---
     { id: "pollo", name: "Pechuga de Pollo", category: "proteina", dietTypes: ["omnivoro"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 165 },
-    { id: "huevo", name: "Huevo", category: "proteina", dietTypes: ["omnivoro", "vegetariano"], allergens: ["huevo"], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 155 },
+    { id: "muslos-pollo", name: "Muslos de Pollo (sin piel)", category: "proteina", dietTypes: ["omnivoro"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 180 },
+    { id: "pavo", name: "Pechuga de Pavo Magra", category: "proteina", dietTypes: ["omnivoro"], allergens: [], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 135 },
+    { id: "carne-magra", name: "Carne de Res Magra (Lomo)", category: "proteina", dietTypes: ["omnivoro"], allergens: [], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 190 },
+    { id: "salmon", name: "Salmón Fresco", category: "proteina", dietTypes: ["omnivoro"], allergens: ["pescado"], budget: "alto", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 208 },
     { id: "atun", name: "Atún (enlatado, al agua)", category: "proteina", dietTypes: ["omnivoro"], allergens: ["pescado"], budget: "medio", isDiabeticFriendly: true, isLowSodium: false, isHighProtein: true, caloriesPer100g: 116 },
-    { id: "tofu", name: "Tofu", category: "proteina", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["soya"], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 76 },
+    { id: "merluza", name: "Merluza / Filete de Pescado Blanco", category: "proteina", dietTypes: ["omnivoro"], allergens: ["pescado"], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 82 },
+    { id: "huevo", name: "Huevo Entero", category: "proteina", dietTypes: ["omnivoro", "vegetariano"], allergens: ["huevo"], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 155 },
+    { id: "claras-huevo", name: "Claras de Huevo", category: "proteina", dietTypes: ["omnivoro", "vegetariano"], allergens: ["huevo"], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 52 },
+    { id: "tofu", name: "Tofu Orgánico", category: "proteina", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["soya"], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 76 },
+    { id: "seitan", name: "Seitán (Proteína de Trigo)", category: "proteina", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["gluten"], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 370 },
     { id: "yogur-griego", name: "Yogur Griego Natural", category: "proteina", dietTypes: ["omnivoro", "vegetariano"], allergens: ["lactosa"], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 97 },
+    { id: "queso-cottage", name: "Queso Cottage Descremado", category: "proteina", dietTypes: ["omnivoro", "vegetariano"], allergens: ["lactosa"], budget: "medio", isDiabeticFriendly: true, isLowSodium: false, isHighProtein: true, caloriesPer100g: 98 },
     { id: "lentejas", name: "Lentejas", category: "proteina", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 116 },
     { id: "frijoles", name: "Frijoles / Alubias", category: "proteina", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 127 },
+    { id: "garbanzos", name: "Garbanzos", category: "proteina", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 164 },
+    { id: "proteina-whey", name: "Proteína en Polvo (Whey/Vegana)", category: "proteina", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["lactosa", "soya"], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 370 },
 
-    // --- Carbohidratos ---
-    { id: "avena", name: "Avena", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["gluten"], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 389 },
+    // --- Carbohidratos Complejos ---
+    { id: "avena", name: "Avena Integral en Hojuelas", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["gluten"], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 389 },
     { id: "arroz-integral", name: "Arroz Integral", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 123 },
-    { id: "papa", name: "Papa / Camote", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: false, isLowSodium: true, isHighProtein: false, caloriesPer100g: 86 },
-    { id: "quinoa", name: "Quinoa", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 120 },
-    { id: "pan-integral", name: "Pan Integral", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["gluten"], budget: "bajo", isDiabeticFriendly: false, isLowSodium: false, isHighProtein: false, caloriesPer100g: 247 },
+    { id: "arroz-basmati", name: "Arroz Basmati / Jazmín", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 130 },
+    { id: "papa", name: "Papa / Patata al Horno", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: false, isLowSodium: true, isHighProtein: false, caloriesPer100g: 86 },
+    { id: "camote", name: "Camote / Batata Dulce", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 86 },
+    { id: "quinoa", name: "Quinoa Orgánica", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 120 },
+    { id: "pan-integral", name: "Pan Integral Multigrano", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["gluten"], budget: "bajo", isDiabeticFriendly: false, isLowSodium: false, isHighProtein: false, caloriesPer100g: 247 },
+    { id: "pasta-integral", name: "Pasta Integral", category: "carbohidrato", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["gluten"], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 131 },
 
     // --- Vegetales ---
-    { id: "brocoli", name: "Brócoli", category: "vegetal", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 34 },
-    { id: "espinaca", name: "Espinaca", category: "vegetal", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 23 },
+    { id: "brocoli", name: "Brócoli al Vapor", category: "vegetal", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 34 },
+    { id: "espinaca", name: "Espinaca Fresca", category: "vegetal", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 23 },
+    { id: "esparragos", name: "Espárragos Verdes", category: "vegetal", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 20 },
     { id: "zanahoria", name: "Zanahoria", category: "vegetal", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 41 },
     { id: "tomate", name: "Tomate", category: "vegetal", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 18 },
+    { id: "pepino", name: "Pepino", category: "vegetal", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 15 },
+    { id: "pimiento", name: "Pimiento / Morrón", category: "vegetal", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 26 },
 
     // --- Frutas ---
-    { id: "manzana", name: "Manzana", category: "fruta", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 52 },
+    { id: "manzana", name: "Manzana Verde", category: "fruta", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 52 },
     { id: "banana", name: "Plátano / Banana", category: "fruta", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: false, isLowSodium: true, isHighProtein: false, caloriesPer100g: 89 },
-    { id: "frutos-rojos", name: "Frutos Rojos (fresa, mora, arándano)", category: "fruta", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "alto", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 43 },
+    { id: "frutos-rojos", name: "Frutos Rojos (Fresas/Moras)", category: "fruta", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "alto", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 43 },
+    { id: "kiwi", name: "Kiwi", category: "fruta", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 61 },
+    { id: "naranja", name: "Naranja", category: "fruta", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 47 },
 
     // --- Grasas Saludables ---
-    { id: "aguacate", name: "Aguacate", category: "grasa", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 160 },
-    { id: "nueces", name: "Nueces / Almendras", category: "grasa", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["frutos_secos"], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 607 },
-    { id: "aceite-oliva", name: "Aceite de Oliva", category: "grasa", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 884 },
+    { id: "aguacate", name: "Aguacate / Palta", category: "grasa", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 160 },
+    { id: "nueces", name: "Nueces y Almendras", category: "grasa", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["frutos_secos"], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 607 },
+    { id: "crema-mani", name: "Crema de Cacahuate/Maní Natural", category: "grasa", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["frutos_secos"], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: true, caloriesPer100g: 588 },
+    { id: "semillas-chia", name: "Semillas de Chía / Lino", category: "grasa", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 486 },
+    { id: "aceite-oliva", name: "Aceite de Oliva Extra Virgen", category: "grasa", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: [], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 884 },
 
-    // --- Lácteos / Alternativas ---
+    // --- Lácteos / Bebidas Vegetales ---
     { id: "leche-descremada", name: "Leche Descremada", category: "lacteo", dietTypes: ["omnivoro", "vegetariano"], allergens: ["lactosa"], budget: "bajo", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 34 },
-    { id: "bebida-almendra", name: "Bebida de Almendra (sin azúcar)", category: "lacteo", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["frutos_secos"], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 17 }
+    { id: "bebida-almendra", name: "Bebida de Almendra (Sin Azúcar)", category: "lacteo", dietTypes: ["omnivoro", "vegetariano", "vegano"], allergens: ["frutos_secos"], budget: "medio", isDiabeticFriendly: true, isLowSodium: true, isHighProtein: false, caloriesPer100g: 17 }
 ];
 
 const FOOD_CATEGORY_LABELS = {
@@ -2338,8 +2358,15 @@ document.addEventListener('DOMContentLoaded', () => {
         currentGoogleUser = { email, name, given_name: name.split(' ')[0], picture: avatarSvg };
         localStorage.setItem('iafit_google_user', JSON.stringify(currentGoogleUser));
         closeLoginModal();
+        
         loadUserProfile();
         updateGoogleUserUI();
+        updateUIWithUserData();
+
+        // Sincronización automática con la nube al ingresar correo
+        if (window.triggerPullCloudSync) {
+            window.triggerPullCloudSync();
+        }
     }
 
     if (btnOpenOnboarding) btnOpenOnboarding.addEventListener('click', openLoginModal);
@@ -3002,15 +3029,27 @@ function evaluateFoodForUser(food, user) {
         reasons.blocking.push(`Contiene: ${allergenos.join(', ')}`);
     }
 
-    const safe = dietTypeOk && !allergyConflict;
+    // Filtrado de presupuesto:
+    // Bajo: alimentos económicos (presupuesto bajo)
+    // Medio: alimentos económicos y medios
+    // Alto: todos los alimentos (bajo, medio, alto)
+    const budgetLevels = { bajo: 1, medio: 2, alto: 3 };
+    const userBudgetLevel = budgetLevels[user.dietBudget || 'bajo'] || 1;
+    const foodBudgetLevel = budgetLevels[food.budget || 'bajo'] || 1;
+
+    let budgetOk = foodBudgetLevel <= userBudgetLevel;
+    if (!budgetOk) {
+        reasons.blocking.push(`Alimento de presupuesto ${food.budget.toUpperCase()}`);
+    }
+
+    const safe = dietTypeOk && !allergyConflict && budgetOk;
 
     let score = 0;
     if (food.budget === (user.dietBudget || 'bajo')) {
-        score += 2;
-        reasons.positive.push('Se ajusta a tu presupuesto');
-    } else if (food.budget === 'bajo') {
+        score += 3;
+        reasons.positive.push('Ideal para tu presupuesto');
+    } else {
         score += 1;
-        reasons.positive.push('Económico y accesible');
     }
 
     if (user.isDiabetic && food.isDiabeticFriendly) {
@@ -3022,15 +3061,12 @@ function evaluateFoodForUser(food, user) {
         reasons.positive.push('Bajo en sodio');
     }
     if (user.dietGoal === 'ganar_musculo' && food.isHighProtein) {
-        score += 2;
-        reasons.positive.push('Alto en proteína');
+        score += 3;
+        reasons.positive.push('Alto en proteína (hipertrofia)');
     }
     if (user.dietGoal === 'bajar_peso' && (food.category === 'vegetal' || food.category === 'fruta')) {
-        score += 1;
-        reasons.positive.push('Bajo en calorías, alto en saciedad');
-    }
-    if (user.dietGoal === 'bajar_peso' && food.caloriesPer100g > 400) {
-        score -= 1; // grasas/frutos secos siguen permitidos pero con moderación
+        score += 2;
+        reasons.positive.push('Bajo en calorías y saciante');
     }
 
     return { food, safe, score, reasons };
@@ -3056,7 +3092,28 @@ function populateDietPreferencesUI() {
     });
 }
 
-// Selector de alergias (multi-selección con "Ninguna" excluyente, igual que las zonas de lesión)
+function updateDietAndGeneratePlan() {
+    state.user.dietType = dietTypeSelect.value;
+    state.user.dietGoal = dietGoalSelect.value;
+    state.user.mealsPerDay = parseInt(dietMealsSelect.value);
+    state.user.allergies = Array.from(allergyChips)
+        .filter(c => c.classList.contains('active') && c.getAttribute('data-allergy') !== 'none')
+        .map(c => c.getAttribute('data-allergy'));
+
+    const activeBudgetCard = document.querySelector('#diet-budget-options .resource-card.active');
+    state.user.dietBudget = activeBudgetCard ? activeBudgetCard.getAttribute('data-budget') : 'bajo';
+
+    saveUserProfile();
+
+    if (aiDietResult) {
+        aiDietResult.innerHTML = '';
+        aiDietResult.classList.remove('loading');
+    }
+
+    generateDietPlan();
+}
+
+// Selector de alergias (multi-selección con "Ninguna" excluyente)
 allergyChips.forEach(chip => {
     chip.addEventListener('click', () => {
         const allergy = chip.getAttribute('data-allergy');
@@ -3071,6 +3128,7 @@ allergyChips.forEach(chip => {
                 document.querySelector('#allergy-selector .zone-chip-none').classList.add('active');
             }
         }
+        updateDietAndGeneratePlan();
     });
 });
 
@@ -3078,28 +3136,14 @@ dietBudgetCards.forEach(card => {
     card.addEventListener('click', () => {
         dietBudgetCards.forEach(c => c.classList.remove('active'));
         card.classList.add('active');
+        updateDietAndGeneratePlan();
     });
 });
 
-btnGenerateDiet.addEventListener('click', () => {
-    state.user.dietType = dietTypeSelect.value;
-    state.user.dietGoal = dietGoalSelect.value;
-    state.user.mealsPerDay = parseInt(dietMealsSelect.value);
-    state.user.allergies = Array.from(allergyChips)
-        .filter(c => c.classList.contains('active') && c.getAttribute('data-allergy') !== 'none')
-        .map(c => c.getAttribute('data-allergy'));
-
-    const activeBudgetCard = document.querySelector('#diet-budget-options .resource-card.active');
-    state.user.dietBudget = activeBudgetCard ? activeBudgetCard.getAttribute('data-budget') : 'bajo';
-
-    saveUserProfile();
-
-    // Limpiar cualquier sugerencia de IA anterior, ya no corresponde al nuevo perfil
-    aiDietResult.innerHTML = '';
-    aiDietResult.classList.remove('loading');
-
-    generateDietPlan();
-});
+if (dietTypeSelect) dietTypeSelect.addEventListener('change', updateDietAndGeneratePlan);
+if (dietGoalSelect) dietGoalSelect.addEventListener('change', updateDietAndGeneratePlan);
+if (dietMealsSelect) dietMealsSelect.addEventListener('change', updateDietAndGeneratePlan);
+if (btnGenerateDiet) btnGenerateDiet.addEventListener('click', updateDietAndGeneratePlan);
 
 function renderCalorieSummary(targets) {
     if (!targets) {
@@ -3721,8 +3765,8 @@ function initChat() {
     state.chatHistory = [];
     checkAIBackendStatus();
 
-
     let healthNotes = [];
+    if (state.user.age >= 60) healthNotes.push("Adulto Mayor / Tercera Edad");
     if (state.user.isDiabetic) healthNotes.push("Diabetes");
     if (state.user.cardioCondition && state.user.cardioCondition !== 'none') healthNotes.push(CARDIO_LABELS[state.user.cardioCondition]);
     if (state.user.respiratoryCondition && state.user.respiratoryCondition !== 'none') healthNotes.push(RESPIRATORY_LABELS[state.user.respiratoryCondition]);
@@ -3731,9 +3775,22 @@ function initChat() {
     }
     if (state.user.cycleTracking && state.user.cycleTracking.enabled) healthNotes.push("Seguimiento de ciclo menstrual");
 
-    const healthStr = healthNotes.length > 0 ? `, considerando tus condiciones de: ${healthNotes.join(', ')}` : '';
+    const healthStr = healthNotes.length > 0 ? `, con enfoque especial en: ${healthNotes.join(', ')}` : '';
     const resourceInfo = RESOURCE_LABELS[state.user.resources] || RESOURCE_LABELS.none;
-    const welcomeMsg = `¡Hola! Soy tu asistente de entrenamiento IAFit. He analizado tu perfil con un peso de ${state.user.weight}kg, altura de ${state.user.height}cm y nivel de actividad ${state.user.activity}${healthStr}. También tomo en cuenta que entrenas con: ${resourceInfo.label.toLowerCase()}. \n\n¿Quieres que armemos una rutina adaptada para hoy o te gustaría saber cómo iniciar de forma segura en tu nivel de intensidad actual (${state.user.intensity === 'light' ? 'Ligero' : 'Normal'})?`;
+    
+    let welcomeMsg = `¡Hola! Soy tu asistente de salud y entrenamiento IAFit. He analizado tu perfil con ${state.user.weight}kg de peso, ${state.user.height}cm de altura y nivel de actividad ${state.user.activity}${healthStr}.\n\n`;
+    
+    welcomeMsg += `💡 **Lo que debes saber para empezar hoy:**\n`;
+    welcomeMsg += `1. **Nutrición Accesible:** Puedes comer saludable sin gastar de más. Alimentos como huevo, avena, lentejas, frijoles y pollo/atún te dan proteína de excelente calidad a bajo costo.\n`;
+    welcomeMsg += `2. **Proteínas vs. Carbohidratos:** La proteína construye tu músculo y no se almacena fácilmente como grasa. En cambio, el exceso de azúcares y carbohidratos refinados es lo que genera grasa corporal.\n`;
+    
+    if (state.user.age >= 60) {
+        welcomeMsg += `3. **Ejercicios para Adultos Mayores:** Tus rutinas están adaptadas con apoyos firmes (sillas/paredes), sin impacto articular brusco para proteger tu movilidad con total seguridad.\n\n`;
+    } else {
+        welcomeMsg += `3. **Entrenamiento Seguro:** Tu rutina se adapta a tus articulaciones y condición física actual.\n\n`;
+    }
+    
+    welcomeMsg += `¿De qué te gustaría hablar o qué duda tienes sobre tu alimentación o ejercicios?`;
 
     appendMessage('bot', welcomeMsg);
 }
@@ -3741,7 +3798,6 @@ function initChat() {
 function appendMessage(sender, text) {
     const msgDiv = document.createElement('div');
     msgDiv.className = `message ${sender}`;
-    // Reemplazar saltos de línea por <br>
     msgDiv.innerHTML = text.replace(/\n/g, '<br>');
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -3754,15 +3810,47 @@ function generateLocalFallbackResponse(userMsg) {
     const query = userMsg.toLowerCase();
     let response = '';
 
-    if (query.includes('rutina') || query.includes('ejercicio') || query.includes('entrenar') || query.includes('entrenamiento')) {
+    if (query.includes('presupuesto') || query.includes('económico') || query.includes('barato') || query.includes('bajos recursos') || query.includes('dinero')) {
+        response = `💡 **Guía de Nutrición de Bajo Costo (Saludable y Económica):**\n\n`;
+        response += `No necesitas suplementos ni alimentos caros para lograr cambios reales. Aquí tienes las mejores fuentes calóricas y proteicas de bajo presupuesto:\n\n`;
+        response += `🥩 **Proteínas Económicas:**\n`;
+        response += `- **Huevos:** La proteína más completa y accesible.\n`;
+        response += `- **Lentejas y Frijoles:** Altísimos en fibra y proteína vegetal.\n`;
+        response += `- **Pechuga/Muslos de Pollo y Atún al agua:** Fuentes magras de alto valor biológico.\n\n`;
+        response += `🌾 **Carbohidratos Complejos Económicos:**\n`;
+        response += `- **Avena en hojuelas:** Te mantiene saciado por horas.\n`;
+        response += `- **Papa y Camote al horno:** Excelentes para dar energía sin elevar demasiado la insulina.\n`;
+        response += `- **Arroz integral:** Rendidor y nutritivo.\n\n`;
+        response += `🥑 **Grasas Saludables Económicas:**\n`;
+        response += `- **Crema de maní/cacahuate natural** o semillas de chía y cacahuetes enteros.\n\n`;
+        response += `*Tip:* Cocinar en casa y combinar legumbres con arroz te brinda una proteína completa a una fracción del costo.`;
+    } else if (query.includes('proteína') || query.includes('carbohidrato') || query.includes('grasa corporal') || query.includes('azúcar') || query.includes('acumular')) {
+        response = `🥩 **La Verdad de las Calorías: Proteínas vs. Carbohidratos y Azúcares**\n\n`;
+        response += `No todas las calorías se procesan igual en tu cuerpo:\n\n`;
+        response += `1. **Proteínas (No se vuelven grasa fácilmente):**\n`;
+        response += `   Al comer proteína (pollo, huevo, legumbres), tu cuerpo gasta hasta el 30% de sus calorías solo en digerirla (efecto térmico). Además, estimula la masa muscular y produce saciedad prolongada.\n\n`;
+        response += `2. **Carbohidratos Refinados y Azúcares (Generan Grasa Corporal):**\n`;
+        response += `   El consumo excesivo de pan blanco, refrescos, galletas y dulces provoca picos de insulina. La insulina bloquea la quema de grasa y almacena ese exceso calórico directamente en el abdomen.\n\n`;
+        response += `3. **Estrategia Inteligente:**\n`;
+        response += `   Mantén tu proteína alta en cada comida y elige carbohidratos complejos (avena, vegetales, camote) en porciones moderadas.`;
+    } else if (query.includes('mayor') || query.includes('tercera edad') || query.includes('adulto mayor') || query.includes('anciano') || query.includes('edad avanzada') || query.includes('abuel')) {
+        response = `👴 **Entrenamiento Adaptado para Adultos Mayores (Tercera Edad)**\n\n`;
+        response += `El ejercicio en la tercera edad es vital para mantener la independencia, masa muscular (prevenir sarcopenia) y la salud ósea:\n\n`;
+        response += `💡 **Principios de Seguridad:**\n`;
+        response += `1. **Apoyo Firme Siempre:** Realizar sentadillas o elevaciones con una silla estable cerca para sostenerse.\n`;
+        response += `2. **Movilidad Articular Sin Dolor:** Ejercicios suaves de rotación de tobillos, rodillas y hombros para lubricar las articulaciones.\n`;
+        response += `3. **Flexiones en Pared:** Fortalecen pecho y brazos sin ejercer presión sobre las muñecas ni requerir tirarse al piso.\n`;
+        response += `4. **Caminata Continua:** 15 a 20 minutos diarios a un ritmo donde puedas mantener una conversación fluida.\n\n`;
+        response += `*Recuerda:* Si sientes dolor agudo o mareo, haz una pausa. El objetivo es mantener el cuerpo activo de forma placentera.`;
+    } else if (query.includes('rutina') || query.includes('ejercicio') || query.includes('entrenar') || query.includes('entrenamiento')) {
         response = `¡Por supuesto! Diseñemos una rutina. Basado en tu perfil de hoy:\n\n`;
         
-        if (state.user.intensity === 'light') {
-            response += `**Rutina Suave / Inicio Progresivo (10-15 min):**\n`;
+        if (state.user.intensity === 'light' || state.user.age >= 60) {
+            response += `**Rutina Suave / Adaptada para Tercera Edad o Inicio (10-15 min):**\n`;
             response += `1. **Movilidad articular completa**: Rotaciones de hombros, caderas y tobillos (5 min) [Ver diagrama animado en Ejercicios].\n`;
             response += `2. **Caminata Suave o Marcha en el sitio**: 8-10 minutos fluidos.\n`;
             response += `3. **Sentadillas asistidas con silla**: 2 series de 5-8 repeticiones [Ver soporte en Ejercicios].\n\n`;
-            response += `*¿Te parece bien esta intensidad o prefieres subirla a Normal?*`;
+            response += `*¿Te parece bien esta intensidad o prefieres ajustarla?*`;
         } else {
             response += `**Rutina Normal (20-25 min):**\n`;
             response += `1. **Caminata Rápida**: 15 minutos continuos.\n`;
@@ -3795,21 +3883,8 @@ function generateLocalFallbackResponse(userMsg) {
         response += `- Prioriza ejercicios de bajo impacto e inclinaciones como flexiones en pared antes que en el piso.\n`;
         response += `- Si sientes dolor en el pecho o dolor de cabeza punzante, detente de inmediato.\n\n`;
         response += `¿Te gustaría un plan enfocado en el cuidado cardiovascular ligero?`;
-    } else if (query.includes('dolor') || query.includes('articulacion') || query.includes('rodilla') || query.includes('espalda')) {
-        response = `El movimiento suave es medicina para las articulaciones porque promueve la lubricación natural (líquido sinovial):\n\n`;
-        response += `💡 **Reglas de Oro:**\n`;
-        response += `- Usa el soporte de una silla para sentadillas para controlar la bajada.\n`;
-        response += `- Evita impactos fuertes. La caminata regular y la movilidad en círculo te ayudarán.\n`;
-        response += `- Si duele, no lo hagas. El ejercicio debe ser estimulante, no doloroso.\n\n`;
-        response += `¿Quieres que te prepare un circuito de movilidad articular sentada?`;
-    } else if (query.includes('iniciar') || query.includes('empezar') || query.includes('cómo')) {
-        response = `Para iniciar con éxito un cambio físico, la clave no es entrenar duro una vez, sino hacer algo pequeño todos los días:\n\n`;
-        response += `1. **Comienza con 10 minutos**: Es suficiente para despertar tu cuerpo.\n`;
-        response += `2. **Ajusta la intensidad**: Si un ejercicio duele o cansa demasiado, usa la opción 'Aligerar'.\n`;
-        response += `3. **Mantén el registro**: El simple hecho de entrar a la app ayuda a tu mente a enfocarse en tu bienestar.\n\n`;
-        response += `¿Qué tal si hoy solo hacemos la caminata corta? ¿Te animas?`;
     } else {
-        response = `¡Qué buen punto! Como tu asistente IA de IAFit, mi objetivo es acompañarte sin juzgar. \n\nRecuerda que puedo guiarte sobre cómo realizar un ejercicio, modificar tu rutina en base a cómo te sientes hoy o darte consejos de salud adaptados a tus datos (${state.user.weight}kg y nivel ${state.user.activity}). \n\n¿De qué te gustaría hablar ahora?`;
+        response = `¡Excelente consulta! Como tu asistente de salud IAFit, estoy aquí para brindarte orientación clara y sin complicaciones.\n\nPuedes preguntarme sobre alimentos económicos, la diferencia entre proteínas y azúcares, ejercicios adaptados para adultos mayores o modificaciones de rutina.\n\n¿En qué te gustaría profundizar ahora?`;
     }
 
     return response;
@@ -3923,29 +3998,30 @@ function updateGoogleUserUI() {
     const headerChip = document.getElementById('google-profile-chip');
     const loginBtn = document.getElementById('btn-google-login-header');
     const loginArea = document.getElementById('google-login-area');
+    const avatarImg = document.getElementById('header-avatar-img');
+    const userNameSpan = document.getElementById('header-user-name');
+    const dropdownEmail = document.getElementById('dropdown-user-email');
 
     if (currentGoogleUser) {
-        // Usuario logueado: mostrar chip en header, ocultar botón de login
         if (loginBtn) loginBtn.style.display = 'none';
         if (loginArea) loginArea.style.display = 'none';
+        
         if (activeBadge) {
             activeBadge.style.display = 'flex';
             activeBadge.innerHTML = `
                 <img src="${currentGoogleUser.picture || ''}" class="google-user-avatar" alt="Avatar" onerror="this.style.display='none'">
                 <span><strong>${currentGoogleUser.name}</strong></span>
-                <button onclick="logoutGoogleUser()" class="google-logout-btn" title="Cerrar Sesión"><i class="lucide-log-out"></i></button>
+                <button onclick="logoutGoogleUser(event)" class="google-logout-btn" title="Cerrar Sesión"><i class="lucide-log-out"></i></button>
             `;
         }
+
         if (headerChip) {
             headerChip.style.display = 'flex';
-            headerChip.innerHTML = `
-                <img src="${currentGoogleUser.picture || ''}" alt="${currentGoogleUser.given_name || currentGoogleUser.name}" onerror="this.style.background='var(--primary)'; this.alt='${(currentGoogleUser.given_name || currentGoogleUser.name).charAt(0)}'">
-                <span>${currentGoogleUser.given_name || currentGoogleUser.name}</span>
-                <button onclick="logoutGoogleUser()" class="google-logout-btn" title="Cerrar Sesión"><i class="lucide-log-out"></i></button>
-            `;
+            if (avatarImg) avatarImg.src = currentGoogleUser.picture || '';
+            if (userNameSpan) userNameSpan.textContent = currentGoogleUser.given_name || currentGoogleUser.name;
+            if (dropdownEmail) dropdownEmail.textContent = currentGoogleUser.email;
         }
     } else {
-        // Sin sesión: mostrar botón de login en header, mostrar área de login en onboarding
         if (loginBtn) loginBtn.style.display = 'flex';
         if (loginArea) loginArea.style.display = 'flex';
         if (activeBadge) {
@@ -3954,50 +4030,135 @@ function updateGoogleUserUI() {
         }
         if (headerChip) {
             headerChip.style.display = 'none';
-            headerChip.innerHTML = '';
         }
     }
 }
 
-window.handleGoogleCredentialResponse = function(response) {
-    const payload = parseJwt(response.credential);
-    if (payload) {
-        currentGoogleUser = {
-            email: payload.email,
-            name: payload.name,
-            given_name: payload.given_name,
-            picture: payload.picture
-        };
-        localStorage.setItem('iafit_google_user', JSON.stringify(currentGoogleUser));
-        
-        // Cargar el perfil de esta persona
-        loadUserProfile();
-        updateGoogleUserUI();
-        updateUIWithUserData();
+window.toggleProfileDropdown = function(event) {
+    if (event) event.stopPropagation();
+    const dropdown = document.getElementById('profile-dropdown-menu');
+    if (!dropdown) return;
+    const isVisible = dropdown.style.display === 'flex';
+    dropdown.style.display = isVisible ? 'none' : 'flex';
+};
 
-        if (state.user.weight > 0) {
-            showScreen(mainApp);
-            generateDashboardRoutine();
-            initChat();
+// Cerrar el menú si se hace click fuera
+document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('profile-dropdown-menu');
+    const chip = document.getElementById('google-profile-chip');
+    if (dropdown && dropdown.style.display === 'flex' && (!chip || !chip.contains(e.target))) {
+        dropdown.style.display = 'none';
+    }
+});
+
+window.logoutGoogleUser = function(event) {
+    if (event) event.stopPropagation();
+    currentGoogleUser = null;
+    localStorage.removeItem('iafit_google_user');
+
+    // Restablecer el estado global a cero para no arrastrar perfil de otro usuario
+    state.user = { ...DEFAULT_USER };
+    
+    updateGoogleUserUI();
+    
+    // Regresar al Onboarding o pantalla de inicio de sesión limpia
+    showScreen(onboardingScreen);
+};
+
+// --- SINCRONIZACIÓN MULTI-DISPOSITIVO (CLOUD BACKUP & RESTORE) ---
+window.openSyncModal = function(event) {
+    if (event) event.stopPropagation();
+    const dropdown = document.getElementById('profile-dropdown-menu');
+    if (dropdown) dropdown.style.display = 'none';
+
+    const syncModal = document.getElementById('sync-modal');
+    const syncEmailInput = document.getElementById('sync-email-input');
+    const statusMsg = document.getElementById('sync-status-msg');
+
+    if (syncModal) {
+        syncModal.style.display = 'flex';
+        syncModal.classList.add('visible');
+    }
+    if (syncEmailInput && currentGoogleUser) {
+        syncEmailInput.value = currentGoogleUser.email;
+    }
+    if (statusMsg) statusMsg.textContent = '';
+};
+
+window.closeSyncModal = function() {
+    const syncModal = document.getElementById('sync-modal');
+    if (syncModal) {
+        syncModal.classList.remove('visible');
+        syncModal.style.display = 'none';
+    }
+};
+
+window.triggerPushCloudSync = async function() {
+    const statusMsg = document.getElementById('sync-status-msg');
+    if (!currentGoogleUser || !currentGoogleUser.email) return;
+
+    if (statusMsg) statusMsg.textContent = 'Respaldando perfil en la nube...';
+
+    try {
+        const response = await fetch(`${AI_BACKEND_URL}/api/sync-user`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: currentGoogleUser.email,
+                userData: state.user
+            })
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+            if (statusMsg) {
+                statusMsg.style.color = '#10b981';
+                statusMsg.textContent = '✓ Perfil respaldado en la nube. ¡Ya puedes descargarlo en cualquier otro dispositivo!';
+            }
         } else {
-            showScreen(onboardingScreen);
+            throw new Error(data.message || 'Error al respaldar');
+        }
+    } catch (err) {
+        if (statusMsg) {
+            statusMsg.style.color = '#ef4444';
+            statusMsg.textContent = 'No se pudo conectar con el servidor de respaldo. Los datos siguen seguros en este dispositivo.';
         }
     }
 };
 
-window.logoutGoogleUser = function() {
-    currentGoogleUser = null;
-    localStorage.removeItem('iafit_google_user');
-    loadUserProfile();
-    updateGoogleUserUI();
-    updateUIWithUserData();
+window.triggerPullCloudSync = async function() {
+    const statusMsg = document.getElementById('sync-status-msg');
+    if (!currentGoogleUser || !currentGoogleUser.email) return;
 
-    if (state.user.weight > 0) {
-        showScreen(mainApp);
-        generateDashboardRoutine();
-        initChat();
-    } else {
-        showScreen(onboardingScreen);
+    if (statusMsg) statusMsg.textContent = 'Buscando tu respaldo en la nube...';
+
+    try {
+        const response = await fetch(`${AI_BACKEND_URL}/api/sync-user?email=${encodeURIComponent(currentGoogleUser.email)}`);
+        const data = await response.json();
+        if (response.ok && data.success && data.userData) {
+            state.user = { ...DEFAULT_USER, ...data.userData };
+            saveUserProfile();
+            updateUIWithUserData();
+            generateDashboardRoutine();
+            initChat();
+            if (statusMsg) {
+                statusMsg.style.color = '#10b981';
+                statusMsg.textContent = '✓ Perfil recuperado con éxito. Se han restaurado tus datos y rutinas.';
+            }
+            setTimeout(() => {
+                closeSyncModal();
+                showScreen(mainApp);
+            }, 1200);
+        } else {
+            if (statusMsg) {
+                statusMsg.style.color = '#f59e0b';
+                statusMsg.textContent = 'No encontramos un respaldo previo en la nube para este correo. Guarda primero un respaldo desde tu otro dispositivo.';
+            }
+        }
+    } catch (err) {
+        if (statusMsg) {
+            statusMsg.style.color = '#ef4444';
+            statusMsg.textContent = 'No se pudo conectar con el servidor para descargar el perfil.';
+        }
     }
 };
 
