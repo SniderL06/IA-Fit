@@ -3374,40 +3374,40 @@ function toggleUserAllowedExercise(exerciseId) {
     generateDashboardRoutine();
 }
 
-// Mapa de GIFs de Demostración Gratuitos y Libres de Derechos para Ejercicios
+// Mapa de Fotos de PERSONAS REALES haciendo ejercicios (Unsplash, libre de derechos)
 const EXERCISE_GIFS_MAP = {
-    "caminata": "https://upload.wikimedia.org/wikipedia/commons/7/71/Walk_animation.gif",
-    "sentadillas-silla": "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.gif",
-    "flexiones-pared": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif",
-    "movilidad-articular": "https://upload.wikimedia.org/wikipedia/commons/7/71/Walk_animation.gif",
-    "flexiones-suelo": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif",
-    "mountain-climbers": "https://upload.wikimedia.org/wikipedia/commons/2/22/Mountain_climbers.gif",
-    "abdominales-crunch": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
-    "elevacion-piernas": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
-    "plancha-isometrica": "https://upload.wikimedia.org/wikipedia/commons/0/08/Plank_exercise_icon.svg",
-    "burpees": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Burpee.gif",
-    "sentadilla-sumo": "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.gif",
-    "zancadas": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Lunge.gif",
-    "glute-bridge": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
-    "superman": "https://upload.wikimedia.org/wikipedia/commons/0/08/Plank_exercise_icon.svg",
-    "bicycle-crunch": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
-    "saltar-cuerda": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Jogging_animation.gif",
-    "wall-sit": "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.gif",
-    "russian-twists": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
-    "bulgarian-split-squat": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Lunge.gif",
-    "plancha-lateral": "https://upload.wikimedia.org/wikipedia/commons/0/08/Plank_exercise_icon.svg",
-    "marcha-sitio": "https://upload.wikimedia.org/wikipedia/commons/7/71/Walk_animation.gif",
-    "eliptica": "https://upload.wikimedia.org/wikipedia/commons/7/71/Walk_animation.gif",
-    "cinta-trotar": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Jogging_animation.gif",
-    "remo-maquina": "https://upload.wikimedia.org/wikipedia/commons/7/71/Walk_animation.gif",
-    "press-pecho-mancuernas": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif",
-    "press-hombros-mancuernas": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif",
-    "peso-muerto-mancuernas": "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.gif",
-    "spinning-hiit": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Jogging_animation.gif",
-    "sentadilla-goblet": "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.gif",
-    "hip-thrust": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sit-up.gif",
-    "dominadas-asistidas": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif",
-    "triceps-copa": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Liegestuetz.gif"
+    "caminata": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop&q=80",
+    "sentadillas-silla": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=300&fit=crop&q=80",
+    "flexiones-pared": "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=400&h=300&fit=crop&q=80",
+    "movilidad-articular": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop&q=80",
+    "flexiones-suelo": "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=400&h=300&fit=crop&q=80",
+    "mountain-climbers": "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=400&h=300&fit=crop&q=80",
+    "abdominales-crunch": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&q=80",
+    "elevacion-piernas": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&q=80",
+    "plancha-isometrica": "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?w=400&h=300&fit=crop&q=80",
+    "burpees": "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=400&h=300&fit=crop&q=80",
+    "sentadilla-sumo": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=300&fit=crop&q=80",
+    "zancadas": "https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=400&h=300&fit=crop&q=80",
+    "glute-bridge": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop&q=80",
+    "superman": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop&q=80",
+    "bicycle-crunch": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&q=80",
+    "saltar-cuerda": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&h=300&fit=crop&q=80",
+    "wall-sit": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=300&fit=crop&q=80",
+    "russian-twists": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&q=80",
+    "bulgarian-split-squat": "https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=400&h=300&fit=crop&q=80",
+    "plancha-lateral": "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?w=400&h=300&fit=crop&q=80",
+    "marcha-sitio": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop&q=80",
+    "eliptica": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=300&fit=crop&q=80",
+    "cinta-trotar": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop&q=80",
+    "remo-maquina": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop&q=80",
+    "press-pecho-mancuernas": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&h=300&fit=crop&q=80",
+    "press-hombros-mancuernas": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&h=300&fit=crop&q=80",
+    "peso-muerto-mancuernas": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=300&fit=crop&q=80",
+    "spinning-hiit": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&h=300&fit=crop&q=80",
+    "sentadilla-goblet": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=300&fit=crop&q=80",
+    "hip-thrust": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop&q=80",
+    "dominadas-asistidas": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop&q=80",
+    "triceps-copa": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&h=300&fit=crop&q=80"
 };
 
 // --- BIBLIOTECA DE EJERCICIOS ---
@@ -3451,8 +3451,8 @@ function renderExercises(exercises) {
         const allowBtnClass = isUserAllowed ? 'btn-allow-exercise active' : 'btn-allow-exercise';
 
         const visualContent = ex.gifUrl 
-            ? `<img src="${ex.gifUrl}" alt="${ex.name}" class="exercise-gif" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" /><div class="gif-fallback" style="display:none;width:100%;height:100%;">${ex.visualSvg || `<i class="${ex.icon}"></i>`}</div>` 
-            : (ex.visualSvg ? ex.visualSvg : `<i class="${ex.icon}"></i>`);
+            ? `<img src="${ex.gifUrl}" alt="${ex.name}" class="exercise-gif" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=300&fit=crop&q=80';" />` 
+            : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(16,185,129,0.1));"><i class="${ex.icon}" style="font-size:3rem;color:var(--primary);opacity:0.7;"></i></div>`;
 
         card.innerHTML = `
             <div class="exercise-img-ph">
@@ -4510,13 +4510,13 @@ function loadWorkoutExerciseStep(index) {
         overallBar.style.width = `${pct}%`;
     }
 
-    // Media Frame (GIF / SVG)
+    // Media Frame (Foto de persona real)
     const mediaFrame = document.getElementById('workout-media-frame');
     if (mediaFrame) {
         if (ex.gifUrl) {
-            mediaFrame.innerHTML = `<img src="${ex.gifUrl}" alt="${ex.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" /><div class="gif-fallback" style="display:none;width:100%;height:100%;">${ex.visualSvg || `<i class="${ex.icon}" style="font-size:4rem;color:var(--primary);"></i>`}</div>`;
+            mediaFrame.innerHTML = `<img src="${ex.gifUrl}" alt="${ex.name}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&h=400&fit=crop&q=80';" />`;
         } else {
-            mediaFrame.innerHTML = ex.visualSvg || `<i class="${ex.icon}" style="font-size:4rem;color:var(--primary);"></i>`;
+            mediaFrame.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(16,185,129,0.1));border-radius:12px;"><i class="${ex.icon}" style="font-size:4rem;color:var(--primary);"></i></div>`;
         }
     }
 

@@ -308,8 +308,8 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
 }
 
 /* Tab Panes */
-.tab-pane { display: none; animation: fadeIn 0.3s ease; }
-.tab-pane.active { display: block; }
+.tab-pane { display: none !important; animation: fadeIn 0.3s ease; }
+.tab-pane.active { display: block !important; }
 
 /* ==========================================
    DASHBOARD
