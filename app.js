@@ -2984,33 +2984,61 @@ const ACTIVITY_FACTOR = {
     active: 1.7
 };
 
-// Calcula BMR (Mifflin-St Jeor), TDEE y objetivo calórico/de macros según el perfil
+// Calcula BMR (Mifflin-St Jeor), TDEE y rango de calorías personalizadas según el perfil
 function calculateCalorieTargets(user) {
     if (!user.weight || !user.height || !user.age) return null;
 
+    // 1. Tasa Metabólica Basal (BMR) - Fórmula de Mifflin-St Jeor
     const sexConstant = user.sex === 'male' ? 5 : user.sex === 'female' ? -161 : -78;
     const bmr = (10 * user.weight) + (6.25 * user.height) - (5 * user.age) + sexConstant;
+
+    // 2. Gasto Energético Total Diario (TDEE) según nivel de actividad real
     const activityFactor = ACTIVITY_FACTOR[user.activity] || 1.35;
     const tdee = bmr * activityFactor;
 
+    // 3. Ajuste según Meta Nutricional (Déficit controlado o Superávit limpio)
     let targetCalories = tdee;
-    if (user.dietGoal === 'bajar_peso') targetCalories = tdee - 400;
-    else if (user.dietGoal === 'ganar_musculo') targetCalories = tdee + 350;
+    if (user.dietGoal === 'bajar_peso') {
+        targetCalories = tdee - 400; // Déficit saludable ~15-20%
+    } else if (user.dietGoal === 'ganar_musculo') {
+        targetCalories = tdee + 350; // Superávit limpio ~10-15%
+    }
 
-    // Piso de seguridad general: nunca sugerir por debajo de esto sin supervisión profesional
-    targetCalories = Math.max(targetCalories, 1300);
+    // Piso de seguridad según sexo biológico
+    const minSafetyCalories = user.sex === 'female' ? 1200 : 1500;
+    targetCalories = Math.max(targetCalories, minSafetyCalories);
 
-    let proteinPct = 0.30, carbPct = 0.40, fatPct = 0.30;
-    if (user.isDiabetic) { proteinPct = 0.30; carbPct = 0.35; fatPct = 0.35; }
-    if (user.dietGoal === 'ganar_musculo') { proteinPct = 0.35; carbPct = 0.40; fatPct = 0.25; }
+    // 4. Rango Calórico Flexible (Rango Dinámico ±100 kcal)
+    const minCalRange = Math.round(targetCalories - 100);
+    const maxCalRange = Math.round(targetCalories + 100);
+
+    // 5. Cálculo Científico de Macronutrientes por Peso (g/kg)
+    let proteinGPerKg = 1.6;
+    if (user.dietGoal === 'ganar_musculo') proteinGPerKg = 2.0;
+    if (user.dietGoal === 'bajar_peso') proteinGPerKg = 1.8; // Preserva músculo en déficit
+
+    const proteinG = Math.round(user.weight * proteinGPerKg);
+    const proteinCals = proteinG * 4;
+
+    // Grasas (25-30% de la energía total)
+    const fatPct = user.dietGoal === 'ganar_musculo' ? 0.25 : 0.30;
+    const fatCals = targetCalories * fatPct;
+    const fatG = Math.round(fatCals / 9);
+
+    // Carbohidratos complejos (remanente de calorías)
+    const carbCals = Math.max(0, targetCalories - proteinCals - fatCals);
+    const carbsG = Math.round(carbCals / 4);
 
     return {
         bmr: Math.round(bmr),
         tdee: Math.round(tdee),
         targetCalories: Math.round(targetCalories),
-        proteinG: Math.round((targetCalories * proteinPct) / 4),
-        carbsG: Math.round((targetCalories * carbPct) / 4),
-        fatG: Math.round((targetCalories * fatPct) / 9)
+        minCalRange,
+        maxCalRange,
+        proteinG,
+        proteinGPerKg,
+        carbsG,
+        fatG
     };
 }
 
@@ -3151,39 +3179,40 @@ function renderCalorieSummary(targets) {
         return;
     }
 
-    const goalLabels = { bajar_peso: 'Déficit para bajar de peso', mantener: 'Mantenimiento', ganar_musculo: 'Superávit para ganar músculo' };
+    const goalLabels = { bajar_peso: 'Déficit controlado para quemar grasa', mantener: 'Rango de Mantenimiento', ganar_musculo: 'Superávit limpio para hipertrofia' };
     const meals = state.user.mealsPerDay || 4;
     const maxPerMeal = Math.round(targets.targetCalories / meals);
 
     calorieSummary.innerHTML = `
         <div class="calorie-hero">
-            <span class="calorie-num">${targets.targetCalories}</span>
-            <span class="calorie-label">kcal / día · ${goalLabels[state.user.dietGoal] || ''}</span>
+            <span class="calorie-num">${targets.minCalRange} - ${targets.maxCalRange}</span>
+            <span class="calorie-label">kcal / día (Rango Flexible Personalizado)</span>
+            <span style="display:block; font-size:0.8rem; opacity:0.85; margin-top:4px;">${goalLabels[state.user.dietGoal] || ''}</span>
         </div>
-        <p class="calorie-sub-note">Gasto energético estimado (TDEE): ${targets.tdee} kcal · Metabolismo basal: ${targets.bmr} kcal</p>
+        <p class="calorie-sub-note">Gasto energético real (TDEE): ~${targets.tdee} kcal/día · Metabolismo basal (BMR): ~${targets.bmr} kcal/día. <em>Las necesidades varían según tu masa muscular y movimiento diario.</em></p>
         
         <!-- Tarjeta de Límites Calóricos -->
         <div class="calorie-limit-card">
             <div class="calorie-limit-info">
-                <h5><i class="lucide-alert-circle"></i> Máximo Recomendado por Comida</h5>
-                <p>Distribuido en <strong>${meals} comidas/día</strong>. Para no exceder tu meta diaria.</p>
+                <h5><i class="lucide-scale"></i> Promedio Recomendado por Comida</h5>
+                <p>Distribuido en <strong>${meals} comidas/día</strong>. Mantiene la saciedad y energía constante.</p>
             </div>
             <div class="calorie-limit-badge">~${maxPerMeal} kcal</div>
         </div>
 
         <div class="stats-list" style="margin-top:16px;">
             <div class="stat-item">
-                <div class="stat-label">Proteína</div>
+                <div class="stat-label">Proteína (${targets.proteinGPerKg || 1.8}g / kg)</div>
                 <div class="stat-progress-bar"><div class="progress" style="width: 100%; background: var(--primary);"></div></div>
                 <span class="stat-value">${targets.proteinG}g</span>
             </div>
             <div class="stat-item">
-                <div class="stat-label">Carbohidratos</div>
-                <div class="stat-progress-bar"><div class="progress" style="width: 100%;"></div></div>
+                <div class="stat-label">Carbohidratos Complejos</div>
+                <div class="stat-progress-bar"><div class="progress" style="width: 100%; background: #10b981;"></div></div>
                 <span class="stat-value">${targets.carbsG}g</span>
             </div>
             <div class="stat-item">
-                <div class="stat-label">Grasas</div>
+                <div class="stat-label">Grasas Saludables</div>
                 <div class="stat-progress-bar"><div class="progress" style="width: 100%; background: var(--warning);"></div></div>
                 <span class="stat-value">${targets.fatG}g</span>
             </div>
