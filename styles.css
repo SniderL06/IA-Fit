@@ -1386,212 +1386,26 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
 }
 
 .workout-close-btn, .workout-sound-btn {
-    background: rgba(255,255,255,0.08);
-    border: none;
-    color: var(--text-primary);
-    width: 40px;
-    height: 40px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .workout-close-btn:hover, .workout-sound-btn:hover {
-    background: rgba(255,255,255,0.18);
-}
-
-.workout-progress-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-}
-
-.workout-progress-info span {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-}
-
-.workout-progress-bar-bg {
-    width: 100%;
-    height: 6px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.workout-progress-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary) 0%, #10b981 100%);
-    border-radius: 10px;
-    transition: width 0.3s ease;
-}
-
-.workout-view {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-}
-
-.workout-media-frame {
-    width: 100%;
-    height: 220px;
-    background: #090a0f;
-    border-radius: 18px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255,255,255,0.08);
-}
-
-.workout-media-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.workout-info-block {
-    text-align: center;
-}
-
-.workout-category-tag {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--primary-light);
-    background: rgba(99, 102, 241, 0.15);
-    padding: 4px 12px;
-    border-radius: 50px;
-}
-
-.workout-exercise-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--text-primary);
-    margin: 8px 0 4px;
-}
-
-.workout-exercise-target {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    margin: 0;
-}
-
-/* Temporizador Circular */
-.workout-timer-display {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    margin: 4px 0;
-    gap: 6px;
-}
-
-.timer-label {
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-}
-
-.timer-circle {
-    width: 130px;
-    height: 130px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.timer-svg {
-    width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
-}
-
-.timer-circle-bg {
-    fill: none;
-    stroke: rgba(255,255,255,0.08);
-    stroke-width: 8;
-}
-
-.timer-circle-progress {
-    fill: none;
-    stroke: var(--primary);
-    stroke-width: 8;
-    stroke-dasharray: 276;
-    stroke-dashoffset: 0;
-    stroke-linecap: round;
-    transition: stroke-dashoffset 0.5s linear, stroke 0.3s ease;
-}
-
-.timer-circle-progress.low-time {
-    stroke: #ef4444;
-}
-
-.timer-text {
-    position: absolute;
-    font-size: 1.8rem;
-    font-weight: 800;
-    font-family: 'Outfit', sans-serif;
-    color: var(--text-primary);
-}
-
-/* Modo actividad libre (sin timer forzado): caminata, cinta, elíptica, etc. */
-.workout-duration-free {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin: 10px 0;
-    text-align: center;
-}
-
-.duration-stopwatch {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 2.1rem;
-    font-weight: 800;
-    color: var(--text-primary);
-}
-
-.duration-stopwatch i {
-    width: 28px;
-    height: 28px;
-    color: var(--primary);
-}
-
-.duration-free-hint {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    max-width: 280px;
-    margin: 0;
-    line-height: 1.4;
-}
-
-.workout-duration-finish-btn {
-    margin-top: 16px;
-}
-
-.workout-controls-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: var(--primary);
+    color: #ffffff;
+    transform: scale(1.05);
 }
 
 .workout-ctrl-btn {
@@ -1601,33 +1415,40 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.15s ease, background 0.2s ease;
+    transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .workout-ctrl-btn.main {
-    width: 64px;
-    height: 64px;
-    background: var(--primary);
-    color: white;
-    font-size: 1.5rem;
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    width: 68px;
+    height: 68px;
+    background: linear-gradient(135deg, var(--primary) 0%, #818cf8 100%);
+    color: #ffffff !important;
+    font-size: 1.8rem;
+    box-shadow: 0 6px 24px rgba(99, 102, 241, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .workout-ctrl-btn.main:hover {
-    transform: scale(1.06);
-    background: var(--primary-light);
+    transform: scale(1.08);
+    background: linear-gradient(135deg, #4f46e5 0%, var(--primary) 100%);
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.8);
 }
 
 .workout-ctrl-btn.sec {
-    width: 48px;
-    height: 48px;
-    background: rgba(255,255,255,0.08);
-    color: var(--text-primary);
-    font-size: 1.1rem;
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1.5px solid rgba(255, 255, 255, 0.22);
+    color: #ffffff !important;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 .workout-ctrl-btn.sec:hover {
-    background: rgba(255,255,255,0.18);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: var(--primary-light);
+    color: #ffffff !important;
+    transform: scale(1.06);
 }
 
 /* Vista de Descanso */
@@ -1813,92 +1634,269 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
    AJUSTES MOBILE-FIRST (MEDIA QUERIES < 768px)
    ------------------------------------------ */
 @media (max-width: 768px) {
-    .container {
-        padding: 10px;
+
+    /* === GLOBAL === */
+    :root { --nav-height: 58px; }
+    body { overflow-x: hidden; }
+    * { max-width: 100vw; }
+
+    .app-content {
+        padding: 14px 10px calc(var(--nav-height) + 14px) !important;
     }
 
-    .header-content {
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 10px 14px;
+    /* === HEADER === */
+    .app-header {
+        padding: 8px 12px !important;
+        gap: 8px;
     }
+    .app-header .brand h2 { font-size: 1.15rem; }
+    .app-header .brand { gap: 6px; margin-bottom: 0; }
 
-    .brand h1 {
-        font-size: 1.3rem;
-    }
-
-    .nav-tabs {
-        overflow-x: auto;
-        white-space: nowrap;
-        padding: 6px;
+    .user-summary {
         gap: 6px;
-        -webkit-overflow-scrolling: touch;
+        overflow: hidden;
     }
 
-    .tab-btn {
-        padding: 8px 14px;
-        font-size: 0.82rem;
-        flex-shrink: 0;
+    .google-profile-chip {
+        padding: 3px 8px;
+        font-size: 0.72rem;
+        max-width: 140px;
+    }
+    .google-profile-chip img { width: 20px; height: 20px; }
+    #header-user-name {
+        max-width: 70px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
     }
 
+    .btn-google-login-header {
+        padding: 5px 10px;
+        font-size: 0.72rem;
+    }
+    .btn-google-login-header svg { width: 14px; height: 14px; }
+
+    .badges-dynamic { display: none; }
+    #btn-edit-profile { padding: 6px; font-size: 0.9rem; }
+
+    .profile-dropdown-menu {
+        width: 220px;
+        right: -8px;
+    }
+
+    /* === NAV === */
+    .app-nav {
+        height: 58px;
+        padding: 0 4px;
+    }
+    .nav-item {
+        font-size: 0.58rem;
+        gap: 2px;
+        padding: 6px 4px;
+    }
+    .nav-item i { font-size: 1.1rem; }
+
+    /* === DASHBOARD === */
     .dashboard-grid {
         grid-template-columns: 1fr !important;
-        gap: 14px;
+        gap: 12px;
     }
 
     .glass-card {
-        padding: 16px !important;
-        border-radius: 16px !important;
-    }
-
-    .exercise-grid {
-        grid-template-columns: 1fr !important;
+        padding: 14px 12px !important;
+        border-radius: 14px !important;
     }
 
     .card-header {
-        flex-direction: column;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .card-header h3 { font-size: 0.82rem; }
+
+    /* IMC */
+    .imc-num { font-size: 2.2rem; }
+    .imc-status { font-size: 0.82rem; }
+    .imc-display { gap: 8px; }
+
+    #dashboard-daily-advice { font-size: 0.8rem; }
+
+    /* Stats */
+    .stat-item { flex-wrap: wrap; gap: 6px; }
+    .stat-label { font-size: 0.72rem; min-width: 100px; }
+    .stat-value { font-size: 0.75rem; }
+
+    /* Rutina de Hoy */
+    .plan-quick-card .card-header {
+        flex-direction: column !important;
         align-items: flex-start !important;
+    }
+    .plan-quick-card .card-header > div:last-child {
+        width: 100%;
+        justify-content: stretch;
+    }
+    .plan-quick-card .card-header .btn-sm {
+        flex: 1;
+        justify-content: center;
+        font-size: 0.72rem;
+        padding: 8px 10px;
+    }
+
+    .routine-item { padding: 10px; gap: 10px; }
+    .routine-details h4 { font-size: 0.8rem; }
+    .routine-details p { font-size: 0.7rem; }
+    .routine-num { width: 26px; height: 26px; font-size: 0.75rem; }
+    .reason-chip { font-size: 0.62rem; padding: 2px 6px; }
+
+    /* === EJERCICIOS === */
+    .exercise-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+    }
+
+    .exercise-img-ph { height: 180px; }
+
+    .exercise-card-info { padding: 12px; }
+    .exercise-card-info h4 { font-size: 0.9rem; }
+    .exercise-card-info p { font-size: 0.78rem; margin-bottom: 8px; }
+
+    .exercise-meta-badge { font-size: 0.65rem; padding: 2px 7px; }
+    .muscle-tag { font-size: 0.62rem; padding: 2px 6px; }
+
+    .btn-allow-exercise { font-size: 0.72rem; padding: 7px 10px; }
+
+    /* Search & Filters */
+    #exercise-search { font-size: 0.82rem; padding: 10px 12px 10px 38px; }
+    .filter-chips { gap: 6px; }
+    .chip { font-size: 0.7rem; padding: 5px 10px; }
+
+    /* === MODAL DE EJERCICIO === */
+    .exercise-modal {
+        max-height: 85dvh;
+        border-radius: 20px 20px 0 0;
+    }
+    .modal-body { padding: 14px 14px 0; }
+    .modal-title { font-size: 1.1rem; }
+    .modal-svg-area { height: 160px; }
+    .modal-meta { gap: 6px; }
+    .step-item { padding: 10px; gap: 10px; }
+    .step-text { font-size: 0.78rem; }
+
+    /* === CHAT === */
+    #tab-chat {
+        min-height: auto;
+    }
+    .chat-container { min-height: 300px; }
+    .chat-header { padding: 10px 12px; }
+    .bot-info h4 { font-size: 0.82rem; }
+    .avatar { width: 34px; height: 34px; font-size: 0.95rem; }
+
+    .chat-messages {
+        padding: 10px;
+        gap: 8px;
+        max-height: 40dvh;
+        min-height: 200px;
+    }
+    .message {
+        max-width: 90%;
+        font-size: 0.8rem;
+        padding: 10px 12px;
+    }
+
+    .chat-quick-actions { padding: 8px 10px; gap: 6px; }
+    .quick-btn { font-size: 0.7rem; padding: 5px 10px; }
+
+    .chat-input-area { padding: 10px 10px; gap: 8px; }
+    #chat-input { font-size: 0.82rem; padding: 9px 12px; }
+    .btn-send { width: 38px; height: 38px; font-size: 0.9rem; }
+
+    /* === DIETA === */
+    .calorie-hero { margin-bottom: 12px; }
+    .calorie-num { font-size: 1.8rem !important; word-break: break-word; }
+    .calorie-label { font-size: 0.72rem; }
+    .calorie-sub-note { font-size: 0.68rem; }
+
+    .calorie-limit-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 10px 12px;
+    }
+    .calorie-limit-info h5 { font-size: 0.78rem; }
+    .calorie-limit-info p { font-size: 0.7rem; }
+    .calorie-limit-badge { font-size: 0.95rem; padding: 4px 10px; }
+
+    .resource-options {
+        grid-template-columns: 1fr !important;
+        gap: 8px;
+    }
+    .resource-card { padding: 10px 8px; }
+    .resource-title { font-size: 0.75rem; }
+    .resource-desc { font-size: 0.65rem; }
+
+    .foods-category-items { gap: 6px; }
+    .food-item-chip { padding: 8px 10px; min-width: 100px; }
+    .food-name { font-size: 0.75rem; }
+    .food-kcal-badge { font-size: 0.65rem; }
+
+    .diet-disclaimer { font-size: 0.65rem; }
+
+    /* Nutrition Guide Cards */
+    .nutrition-guide-grid {
+        grid-template-columns: 1fr !important;
         gap: 10px;
     }
 
-    .card-header button {
-        width: 100%;
-    }
-
-    /* Player en Móvil */
+    /* === WORKOUT PLAYER === */
     .workout-player-container {
-        padding: 18px 14px;
-        gap: 14px;
-        border-radius: 20px;
+        padding: 14px 10px;
+        gap: 10px;
+        border-radius: 16px;
     }
-
-    .workout-media-frame {
-        height: 170px;
-    }
-
-    .workout-exercise-title {
-        font-size: 1.25rem;
-    }
-
-    .timer-circle {
-        width: 105px;
-        height: 105px;
-    }
-
-    .timer-text {
-        font-size: 1.4rem;
-    }
-
+    .workout-media-frame { height: 150px; }
+    .workout-exercise-title { font-size: 1.1rem; }
+    .timer-circle { width: 90px; height: 90px; }
+    .timer-text { font-size: 1.2rem; }
     .complete-stats-grid {
         grid-template-columns: 1fr;
-        gap: 8px;
+        gap: 6px;
     }
 
-    /* Formulario Onboarding */
+    /* === ONBOARDING === */
     .onboarding-card {
-        padding: 20px 16px !important;
-        width: 96% !important;
+        padding: 18px 14px !important;
+        width: 98% !important;
     }
+    .form-grid { grid-template-columns: 1fr !important; }
+    .wizard-line { max-width: 24px; }
+    .wizard-dot { width: 28px; height: 28px; font-size: 0.72rem; }
+    .wizard-step-title { font-size: 0.95rem; }
+    .wizard-step-desc { font-size: 0.75rem; }
+    .wizard-nav { gap: 8px; }
+    .wizard-nav .btn { font-size: 0.8rem; padding: 9px 16px; }
+
+    .zone-selector { gap: 6px; }
+    .zone-chip { padding: 5px 10px; font-size: 0.72rem; }
+
+    .equipment-chips { gap: 6px; }
+    .equip-chip { padding: 6px 10px; font-size: 0.75rem; }
+
+    /* Google Login Modal */
+    .google-login-modal-box {
+        width: 95% !important;
+        max-width: 360px;
+        padding: 20px 16px !important;
+    }
+
+    /* Sync Modal */
+    #sync-modal .google-login-modal-box {
+        width: 95% !important;
+    }
+
+    /* Cycle tracking fields */
+    .cycle-detail-grid { grid-template-columns: 1fr !important; }
 }
 
 /* ==========================================
