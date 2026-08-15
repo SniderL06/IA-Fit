@@ -3298,6 +3298,42 @@ function pickDiverseRoutine(evaluations, count) {
     return routine.slice(0, count).sort((a, b) => b.score - a.score);
 }
 
+function getUserEvolutionLevel(user) {
+    // Definición de nivel según entrenamientos completados, nivel inicial y datos de la persona
+    const completed = user.completedWorkoutsCount || 0;
+    const baseLevel = user.activity || 'sedentary';
+    const age = user.age || 30;
+
+    let stage = 1;
+    let label = "Nivel 1: Inicial / Adaptación";
+    let exerciseCount = 4;
+    let maxDifficulty = 1; // 1: Baja, 2: Media, 3: Alta
+
+    if (baseLevel === 'sedentary') {
+        if (completed >= 6) { stage = 3; label = "Nivel 3: Avanzado Constante"; exerciseCount = 6; maxDifficulty = 3; }
+        else if (completed >= 3) { stage = 2; label = "Nivel 2: Progreso Intermedio"; exerciseCount = 5; maxDifficulty = 2; }
+        else { stage = 1; label = "Nivel 1: Adaptación Sedentaria"; exerciseCount = 4; maxDifficulty = 1; }
+    } else if (baseLevel === 'moderate') {
+        if (completed >= 5) { stage = 3; label = "Nivel 3: Desafío Alto"; exerciseCount = 6; maxDifficulty = 3; }
+        else { stage = 2; label = "Nivel 2: Intermedio Activo"; exerciseCount = 5; maxDifficulty = 2; }
+    } else {
+        stage = 3; label = "Nivel 3: Atleta / Avanzado"; exerciseCount = 6; maxDifficulty = 3;
+    }
+
+    // Adultos mayores (>60) adaptan volumen con foco en seguridad articular
+    if (age >= 60 && exerciseCount > 5) {
+        exerciseCount = 5;
+    }
+
+    // Ajuste por preferencia 'light'
+    if (user.intensity === 'light') {
+        maxDifficulty = 1;
+        label += " (Modo Aligerado)";
+    }
+
+    return { stage, label, exerciseCount, maxDifficulty, completed };
+}
+
 function generateDashboardRoutine() {
     quickRoutineList.innerHTML = '';
 
@@ -3305,24 +3341,49 @@ function generateDashboardRoutine() {
         ? computeCyclePhase(state.user.cycleTracking.lastPeriodDate, state.user.cycleTracking.cycleLength)
         : null;
 
-    // Evaluamos TODA la base de datos contra el perfil completo (salud, lesiones, equipo, ciclo)
+    const evolution = getUserEvolutionLevel(state.user);
+
+    // Actualizar UI del banner de progresión en Dashboard
+    const levelInd = document.getElementById('user-level-indicator');
+    const progTitle = document.getElementById('progression-title');
+    const progDesc = document.getElementById('progression-desc');
+    const progBadge = document.getElementById('progression-completed-badge');
+    const btnIncrease = document.getElementById('btn-increase-level');
+
+    if (levelInd) levelInd.textContent = `${evolution.label} (${evolution.exerciseCount} ejercicios)`;
+    if (progTitle) progTitle.textContent = evolution.label;
+    if (progDesc) {
+        progDesc.textContent = `Paso ${evolution.stage} de 3 • Plan adaptado para edad ${state.user.age || '--'} años, ${state.user.weight || '--'} kg y nivel ${state.user.activity === 'sedentary' ? 'inicial' : 'activo'}.`;
+    }
+    if (progBadge) progBadge.textContent = `${evolution.completed} Completado(s)`;
+
+    // Evaluamos TODA la base de datos contra el perfil completo
     const evaluations = EXERCISES_DATABASE.map(ex => evaluateExerciseForUser(ex, state.user, cycleInfo));
     let safeEvaluations = evaluations.filter(ev => ev.safe);
 
-    // Salvaguarda: si por alguna combinación muy restrictiva no queda nada seguro,
-    // nunca mostramos algo inseguro; en vez de eso avisamos y usamos solo movilidad/cardio bajo sin equipo.
     if (safeEvaluations.length === 0) {
         safeEvaluations = evaluations.filter(ev => ev.exercise.cardioIntensity === 'low' && ev.exercise.equipment === 'none');
     }
 
-    const routine = pickDiverseRoutine(safeEvaluations, 4);
+    // Filtro dinámico según la etapa de progresión alcanzada
+    let levelEvaluations = safeEvaluations.filter(ev => {
+        const diffRank = DIFFICULTY_RANK[ev.exercise.difficulty] || 1;
+        return diffRank <= evolution.maxDifficulty;
+    });
 
-    if (routine.length === 0) {
+    if (levelEvaluations.length < evolution.exerciseCount) {
+        levelEvaluations = safeEvaluations; // Fallback seguro para garantizar variedad
+    }
+
+    const routineEvaluations = pickDiverseRoutine(levelEvaluations, evolution.exerciseCount);
+    state.currentDashboardRoutine = routineEvaluations.map(ev => ev.exercise);
+
+    if (routineEvaluations.length === 0) {
         quickRoutineList.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem;">No encontramos ejercicios que cumplan con tus restricciones actuales. Te recomendamos consultar con un profesional de salud antes de continuar.</p>`;
         return;
     }
 
-    routine.forEach((ev, idx) => {
+    routineEvaluations.forEach((ev, idx) => {
         const ex = ev.exercise;
         const item = document.createElement('div');
         item.className = 'routine-item';
@@ -3346,7 +3407,6 @@ function generateDashboardRoutine() {
         quickRoutineList.appendChild(item);
     });
 
-    // Botón de ajuste rápido de intensidad en Dashboard
     if (state.user.intensity === 'light') {
         btnQuickAdjust.textContent = 'Subir a Normal';
     } else {
@@ -3360,6 +3420,21 @@ btnQuickAdjust.addEventListener('click', () => {
     updateUIWithUserData();
     generateDashboardRoutine();
 });
+
+const btnIncreaseLevel = document.getElementById('btn-increase-level');
+if (btnIncreaseLevel) {
+    btnIncreaseLevel.addEventListener('click', () => {
+        state.user.completedWorkoutsCount = (state.user.completedWorkoutsCount || 0) + 2;
+        if (state.user.activity === 'sedentary') {
+            state.user.activity = 'moderate';
+        } else if (state.user.activity === 'moderate') {
+            state.user.activity = 'active';
+        }
+        localStorage.setItem('iafit_user', JSON.stringify(state.user));
+        updateUIWithUserData();
+        generateDashboardRoutine();
+    });
+}
 
 function toggleUserAllowedExercise(exerciseId) {
     if (!state.user.userAllowedExercises) state.user.userAllowedExercises = [];
@@ -4369,9 +4444,11 @@ function playWorkoutBeep(freq = 600, duration = 0.12, type = 'sine') {
 }
 
 function initInteractiveWorkoutPlayer(customExercisesList) {
-    // 1. Obtener la rutina de hoy o lista personalizada
+    // 1. Obtener la rutina generada del dashboard o lista personalizada
     if (customExercisesList && customExercisesList.length > 0) {
         workoutState.routine = customExercisesList;
+    } else if (state.currentDashboardRoutine && state.currentDashboardRoutine.length > 0) {
+        workoutState.routine = state.currentDashboardRoutine;
     } else {
         const cycleInfo = (state.user.cycleTracking && state.user.cycleTracking.enabled)
             ? computeCyclePhase(state.user.cycleTracking.lastPeriodDate, state.user.cycleTracking.cycleLength)
@@ -4383,7 +4460,6 @@ function initInteractiveWorkoutPlayer(customExercisesList) {
             return ev.safe || isUserAllowed;
         });
 
-        // Tomar 4 a 5 ejercicios adaptados
         workoutState.routine = safeExercises.slice(0, 5);
         if (workoutState.routine.length === 0) {
             workoutState.routine = EXERCISES_DATABASE.slice(0, 4);
@@ -4707,14 +4783,23 @@ function resumeWorkoutTimer() {
 
 function updatePlayPauseIcon(mode) {
     const icon = document.getElementById('play-pause-icon');
+    const text = document.getElementById('play-pause-text');
     if (icon) {
         icon.className = mode === 'play' ? 'lucide-play' : 'lucide-pause';
+    }
+    if (text) {
+        text.textContent = mode === 'play' ? 'Reanudar' : 'Pausar';
     }
 }
 
 function showWorkoutCompleteScreen() {
     workoutState.status = 'complete';
     clearInterval(workoutState.timerInterval);
+
+    // Incrementar contador de rutinas completadas y guardar progreso
+    state.user.completedWorkoutsCount = (state.user.completedWorkoutsCount || 0) + 1;
+    localStorage.setItem('iafit_user', JSON.stringify(state.user));
+    generateDashboardRoutine();
 
     // Sonido triunfal
     playWorkoutBeep(800, 0.15);
@@ -4731,7 +4816,7 @@ function showWorkoutCompleteScreen() {
 
     // Calcular estadísticas totales
     const mins = Math.max(1, Math.round(workoutState.totalSecondsElapsed / 60));
-    const cals = Math.round(mins * 6.5); // Aprox 6.5 kcal por min de rutina moderada
+    const cals = Math.round(mins * 6.5);
 
     document.getElementById('complete-total-time').textContent = `${mins} min`;
     document.getElementById('complete-total-cals').textContent = `${cals} kcal`;

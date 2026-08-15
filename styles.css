@@ -1364,17 +1364,17 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
 }
 
 .workout-player-container {
-    width: min(540px, 100%);
-    background: var(--surface-2);
-    border: 1px solid rgba(255,255,255,0.1);
+    width: min(540px, 94vw);
+    background: #141727;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 24px;
-    padding: 24px;
+    padding: 20px 18px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    gap: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
     position: relative;
-    max-height: 94vh;
+    max-height: 90vh;
     overflow-y: auto;
 }
 
@@ -1382,73 +1382,114 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
+    width: 100%;
 }
 
 .workout-close-btn, .workout-sound-btn {
     background: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #ffffff;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: flex;
+    color: #ffffff !important;
+    padding: 6px 12px;
+    border-radius: 50px;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 6px;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-size: 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    flex-shrink: 0;
+}
+
+.workout-close-btn i, .workout-sound-btn i {
+    font-size: 1.1rem;
+    color: #ffffff !important;
 }
 
 .workout-close-btn:hover, .workout-sound-btn:hover {
     background: rgba(255, 255, 255, 0.25);
-    border-color: var(--primary);
-    color: #ffffff;
-    transform: scale(1.05);
+    border-color: var(--primary-light);
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.workout-controls-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.workout-controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
 }
 
 .workout-ctrl-btn {
     border: none;
-    border-radius: 50%;
-    display: flex;
+    border-radius: 50px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
     transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-.workout-ctrl-btn.main {
-    width: 68px;
-    height: 68px;
-    background: linear-gradient(135deg, var(--primary) 0%, #818cf8 100%);
+.workout-ctrl-btn i {
+    font-size: 1.2rem;
     color: #ffffff !important;
-    font-size: 1.8rem;
-    box-shadow: 0 6px 24px rgba(99, 102, 241, 0.6);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.workout-ctrl-btn.main {
+    flex: 1.2;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+    color: #ffffff !important;
+    font-size: 0.95rem;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    min-height: 48px;
 }
 
 .workout-ctrl-btn.main:hover {
-    transform: scale(1.08);
-    background: linear-gradient(135deg, #4f46e5 0%, var(--primary) 100%);
-    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.8);
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #4f46e5 0%, var(--primary-light) 100%);
+    box-shadow: 0 8px 28px rgba(99, 102, 241, 0.7);
 }
 
 .workout-ctrl-btn.sec {
-    width: 52px;
-    height: 52px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1.5px solid rgba(255, 255, 255, 0.22);
+    flex: 1;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: #ffffff !important;
-    font-size: 1.3rem;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    font-size: 0.85rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    min-height: 44px;
 }
 
 .workout-ctrl-btn.sec:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.2);
     border-color: var(--primary-light);
     color: #ffffff !important;
-    transform: scale(1.06);
+    transform: translateY(-1px);
+}
+
+.workout-duration-finish-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    border-radius: 14px;
 }
 
 /* Vista de Descanso */

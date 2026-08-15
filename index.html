@@ -370,15 +370,26 @@
                         <div class="card-header" style="flex-wrap:wrap; gap:10px;">
                             <div>
                                 <h3>Tu Rutina de Hoy</h3>
-                                <p style="font-size:0.8rem; color:var(--text-muted); margin:2px 0 0 0;">Ejercicios adaptados a tus metas y salud</p>
+                                <p style="font-size:0.8rem; color:var(--text-muted); margin:2px 0 0 0;" id="user-level-indicator">Nivel: Inicial Adaptativo</p>
                             </div>
-                            <div style="display:flex; gap:8px; align-items:center; margin-left:auto;">
-                                <button id="btn-quick-adjust" class="btn btn-secondary btn-sm">Aligerar más</button>
+                            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-left:auto;">
+                                <button id="btn-quick-adjust" class="btn btn-secondary btn-sm" title="Cambiar intensidad ligera/normal">Aligerar Rutina</button>
+                                <button id="btn-increase-level" class="btn btn-secondary btn-sm" title="Subir nivel de entrenamiento" style="background: rgba(16,185,129,0.15); color:#10b981; border-color:rgba(16,185,129,0.3);">
+                                    <i class="lucide-trending-up"></i>
+                                    <span>Evolucionar Nivel</span>
+                                </button>
                                 <button id="btn-start-workout" class="btn btn-primary btn-sm btn-start-workout-glow">
                                     <i class="lucide-play"></i>
                                     <span>¡Iniciar Entrenamiento!</span>
                                 </button>
                             </div>
+                        </div>
+                        <div class="progression-banner" id="progression-banner" style="background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.25); border-radius:12px; padding:10px 14px; margin-bottom:14px; font-size:0.82rem; color:var(--text-secondary); display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                            <div>
+                                <strong style="color:var(--text-primary);" id="progression-title">Nivel Adaptativo: Sedentario / Inicial</strong>
+                                <p style="margin:2px 0 0 0; font-size:0.75rem; color:var(--text-muted);" id="progression-desc">Rutina graduada según tu peso, edad y nivel inicial. Al completar entrenamientos progresas automáticamente.</p>
+                            </div>
+                            <span class="user-badge accent" id="progression-completed-badge">0 Completados</span>
                         </div>
                         <div class="quick-routine-list" id="quick-routine-list">
                             <!-- Inyectado dinámicamente -->
@@ -654,6 +665,7 @@
             <div class="workout-player-header">
                 <button type="button" class="workout-close-btn" id="btn-exit-workout" title="Salir del entrenamiento">
                     <i class="lucide-x"></i>
+                    <span class="btn-label-text">Cerrar</span>
                 </button>
                 <div class="workout-progress-info">
                     <span id="workout-step-counter">Ejercicio 1 de 4</span>
@@ -663,13 +675,14 @@
                 </div>
                 <button type="button" class="workout-sound-btn" id="btn-toggle-sound" title="Sonido activado/desactivado">
                     <i class="lucide-volume-2" id="sound-icon"></i>
+                    <span class="btn-label-text">Audio</span>
                 </button>
             </div>
 
             <!-- Zona Principal: Modo Ejercicio Activo -->
             <div id="workout-active-view" class="workout-view active">
                 <div class="workout-media-frame" id="workout-media-frame">
-                    <!-- GIF/SVG inyectado dinámicamente -->
+                    <!-- GIF/Imagen inyectado dinámicamente -->
                 </div>
 
                 <div class="workout-info-block">
@@ -678,7 +691,7 @@
                     <p class="workout-exercise-target" id="workout-exercise-target">3 series de 12 reps</p>
                 </div>
 
-                <!-- Reloj / Contador de tiempo (ejercicios por series/repeticiones o con segundos fijos) -->
+                <!-- Reloj / Contador de tiempo -->
                 <div class="workout-timer-display" id="workout-timer-display">
                     <span class="timer-label" id="workout-timer-label">Tiempo restante</span>
                     <div class="timer-circle">
@@ -690,33 +703,38 @@
                     </div>
                 </div>
 
-                <!-- Modo actividad libre (caminata, cinta, elíptica, etc: sin timer forzado) -->
+                <!-- Modo actividad libre (caminata, cinta, elíptica, etc.) -->
                 <div class="workout-duration-free" id="workout-duration-free" style="display:none;">
                     <div class="duration-stopwatch">
                         <i class="lucide-timer"></i>
                         <span id="workout-duration-elapsed">00:00</span>
                     </div>
-                    <p class="duration-free-hint">Actividad libre, sin límite de tiempo. Muévete a tu ritmo y marca "Completado" cuando termines.</p>
+                    <p class="duration-free-hint">Actividad libre. Muévete a tu ritmo y presiona "Completar Ejercicio" cuando termines.</p>
                 </div>
 
-                <!-- Botones de Control del Player -->
-                <div class="workout-controls-row">
-                    <button type="button" class="workout-ctrl-btn sec" id="btn-workout-prev" title="Anterior">
-                        <i class="lucide-skip-back"></i>
-                    </button>
-                    <button type="button" class="workout-ctrl-btn main" id="btn-workout-play-pause">
-                        <i class="lucide-pause" id="play-pause-icon"></i>
-                    </button>
-                    <button type="button" class="workout-ctrl-btn sec" id="btn-workout-next" title="Siguiente / Completar">
-                        <i class="lucide-skip-forward"></i>
+                <!-- Botones Estándar de Control del Player -->
+                <div class="workout-controls-wrapper">
+                    <div class="workout-controls-row">
+                        <button type="button" class="workout-ctrl-btn sec" id="btn-workout-prev" title="Anterior">
+                            <i class="lucide-skip-back"></i>
+                            <span>Anterior</span>
+                        </button>
+                        <button type="button" class="workout-ctrl-btn main" id="btn-workout-play-pause" title="Pausar / Reanudar">
+                            <i class="lucide-pause" id="play-pause-icon"></i>
+                            <span id="play-pause-text">Pausar</span>
+                        </button>
+                        <button type="button" class="workout-ctrl-btn sec" id="btn-workout-next" title="Siguiente / Completar">
+                            <i class="lucide-skip-forward"></i>
+                            <span>Skip</span>
+                        </button>
+                    </div>
+
+                    <!-- CTA explícito para completar ejercicio -->
+                    <button type="button" class="btn btn-primary btn-block workout-duration-finish-btn" id="btn-finish-duration-exercise">
+                        <i class="lucide-check-circle"></i>
+                        <span>Completar Ejercicio</span>
                     </button>
                 </div>
-
-                <!-- CTA explícito para ejercicios de duración libre -->
-                <button type="button" class="btn btn-primary btn-block workout-duration-finish-btn" id="btn-finish-duration-exercise" style="display:none;">
-                    <i class="lucide-check-circle"></i>
-                    <span>Marcar como Completado</span>
-                </button>
             </div>
 
             <!-- Zona Secundaria: Modo Descanso Intermedio -->
